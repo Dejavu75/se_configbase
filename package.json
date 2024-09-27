@@ -1,0 +1,28 @@
+{
+  "name": "se_configbase",
+  "version": "1.0.0",
+  "description": "Configuración base de Solinges Ecosystem",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev index.ts",
+    "tsc": "tsc",
+    "start": "node build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dejavu75/se_configbase.git"
+  },
+  "author": "Diego H. Zacur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dejavu75/se_configbase/issues"
+  },
+  "homepage": "https://github.com/Dejavu75/se_configbase#readme",
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
