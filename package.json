@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Dejavu75/se_configbase#readme",
   "devDependencies": {
+    "@types/node": "^22.7.3",
     "typescript": "^5.6.2"
   },
   "dependencies": {

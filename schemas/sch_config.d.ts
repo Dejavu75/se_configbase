@@ -1,4 +1,4 @@
-export type MySQLConfig = {
+type MySQLConfig = {
     host: string;
     user: string;
     password: string;

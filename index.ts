@@ -1,10 +1,2 @@
-export function print() {
-    console.log('Hello, World!');
-  }
-
- 
-  export * from './src/schemas/sch_config';
-
-  export type MySQLConfig2 = {
-    dee: string;
-  }
+export * from './schemas/sch_config';
+export * from './controllers/conf_default_config';
