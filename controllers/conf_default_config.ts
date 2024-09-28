@@ -29,7 +29,9 @@ export function getLocalDirConfig() {
     iibbdir:  process.env.IIBBDIR || "/etc/nages2/iibb",    
     logdir:  process.env.LOGDIR || "/etc/nages2/logdir",
     certdir:  process.env.CERTDIR || "/etc/nages2/certdir", 
-    certafipdir:  process.env.CERTAFIPDIR || "/etc/nages2/certafipdir"    
+    certafipdir:  process.env.CERTAFIPDIR || "/etc/nages2/certafipdir",
+    logfile:  process.env.LOGFILE || "ages_outputLog.log",
+    errorfile:  process.env.ERRORFILE || "ages_errorsLog.log"
   }
   return localdirConfig
 }
