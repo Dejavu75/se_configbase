@@ -2,7 +2,7 @@
   "name": "se_configbase",
   "version": "1.0.1",
   "description": "Configuración base de Solinges Ecosystem",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev index.ts",
     "tsc": "tsc",

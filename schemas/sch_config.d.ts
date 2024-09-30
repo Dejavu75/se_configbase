@@ -1,4 +1,4 @@
-type MySQLConfig = {
+export type MySQLConfig = {
     host: string;
     user: string;
     password: string;
@@ -19,6 +19,8 @@ export type localdirConfig = {
     iibbdir: string;
     certdir: string;
     certafipdir: string;
+    logfile: string;
+    errorfile: string;
 };
 export type schSettings = {
     notificaciones_base: string;

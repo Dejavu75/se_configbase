@@ -14,8 +14,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.print = print;
-function print() {
-    console.log('Hello, World!');
-}
-__exportStar(require("./src/schemas/sch_config"), exports);
+__exportStar(require("./schemas/sch_config"), exports);
+__exportStar(require("./controllers/conf_default_config"), exports);
