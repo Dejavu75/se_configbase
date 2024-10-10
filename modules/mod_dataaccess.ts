@@ -92,8 +92,11 @@ export class mod_dataaccess {
             });
         });
     }
+    obtenerMySQLConfig(){
+        return getMySQLConfig();
+    }
     obtenerConfigBase(): Connection {
-        let oConfig = getMySQLConfig();
+        let oConfig = this.obtenerMySQLConfig();
         let connection: Connection = mysql.createConnection({
             host: oConfig.host || 'localhost',
             user: oConfig.user || 'user',
