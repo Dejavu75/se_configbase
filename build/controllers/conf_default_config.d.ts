@@ -1,4 +1,5 @@
-import { MySQLConfig, servingConfig, localdirConfig, schSettings } from "../schemas/sch_config";
+import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig } from "../schemas/sch_config";
+export declare function getMSCofnig(): sch_msconfig;
 export declare function getMySQLConfig(): MySQLConfig;
 export declare function getServingConfig(): servingConfig;
 export declare function getLocalDirConfig(): localdirConfig;

@@ -1,10 +1,6 @@
-import mysql, { Connection } from "mysql2";
+import { mod_dataaccess } from "../modules/mod_dataaccess";
 export declare class con_dataaccess {
-    Connection: mysql.Connection;
-    constructor();
-    conectar(conexion?: Connection): Promise<Connection>;
-    obtenerConexion(): Connection;
-    iniciar(): Promise<false | undefined>;
-    validarConfiguracion(conexion?: Connection): Promise<false | undefined>;
-    inicializar(): Promise<void>;
+    modData: mod_dataaccess | undefined;
+    crearModulo(): Promise<void>;
+    controlarDatos(): Promise<void>;
 }

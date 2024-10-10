@@ -13,7 +13,7 @@ export class mod_dataaccess {
         if (mscode === "") mscode = oConfig.mscode;
         if (instancia === "") instancia = oConfig.msinstance;
         if (database === "") database = oConfig.msdb;
-        
+
         this.mscode = mscode;
         this.instancia = instancia;
         this.database = database;
@@ -27,6 +27,12 @@ export class mod_dataaccess {
             database: this.database
         });
         return connection;
+    }
+    async controlarMSDATA() {
+       return this.controlarConfigBase().then(async (oConfig) => {
+        await this.controlarMSDB();
+       });
+
     }
     async crearMSDBData(): Promise<boolean> {
         console.log("Se debe definir crearMSDBData para", this.mscode, this.instancia, this.database);

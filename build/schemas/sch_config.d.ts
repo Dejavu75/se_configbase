@@ -38,3 +38,8 @@ export type sch_afip = {
     pfxclave: string;
     cuit: string;
 };
+export type sch_msconfig = {
+    mscode: string;
+    msinstance: string;
+    msdb: string;
+};

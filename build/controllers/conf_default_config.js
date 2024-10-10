@@ -1,11 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getMSCofnig = getMSCofnig;
 exports.getMySQLConfig = getMySQLConfig;
 exports.getServingConfig = getServingConfig;
 exports.getLocalDirConfig = getLocalDirConfig;
 exports.getAfipConfig = getAfipConfig;
 exports.getSettingsConfig = getSettingsConfig;
 require('dotenv').config();
+function getMSCofnig() {
+    const msconfig = {
+        mscode: process.env.MSCODE || "MSXX",
+        msinstance: process.env.MSINSTANCE || "UNICA",
+        msdb: process.env.MSDB || "MSXX"
+    };
+    return msconfig;
+}
 function getMySQLConfig() {
     const mysqlconfig = {
         host: process.env.MYSQL_HOST || 'localhost',

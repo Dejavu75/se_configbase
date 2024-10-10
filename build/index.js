@@ -16,3 +16,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./schemas/sch_config"), exports);
 __exportStar(require("./controllers/conf_default_config"), exports);
+__exportStar(require("./modules/mod_dataaccess"), exports);
+__exportStar(require("./controllers/con_dataaccess"), exports);
+__exportStar(require("./controllers/con_log"), exports);
+// let oCon = new mod_dataaccess();
+// oCon.controlarMSDATA().then((bResult) => {
+//     console.log("ControlarMSDATA", bResult);
+// }).catch((err) => {
+//     console.log("Error en controlarMSDATA", err);
+// });
