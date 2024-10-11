@@ -50,8 +50,8 @@ export class mod_dataupdater {
             })
         });
     }
-    async procesarUpdates(oCon: Connection | undefined, version: number = this.actual_version): Promise < boolean > {
-            if(version >= this.updates.length) return true;
+    async procesarUpdates(oCon: Connection | undefined, version: number = this.actual_version): Promise<boolean> {
+        if (version >= this.updates.length) return true;
         const result = await this.procesarUpdate(this.updates[version], oCon);
         if (result) {
             this.actual_version = version + 1;
@@ -75,10 +75,23 @@ export class mod_update {
         this.sql = sql;
     }
     async procesarUpdate(oCon: Connection | undefined): Promise<boolean> {
-        if (this.sql == "SQL2") {
-            return Promise.reject(false);
-        }
+
         console.log("Update procesado ", this.version, this.sql);
-        return Promise.resolve(true);
+        return new Promise((resolve, reject) => {
+            if (oCon) {
+                oCon.query(this.sql, async (err: any, result: any) => {
+                    if (err) {
+                        console.log(`Error al procesar update ${this.version}`, err);
+                        return reject(false);
+                    }
+                    console.log(`Procesado update ${this.version}`);
+                    console.log(`SQL: ${this.sql}`);                    
+                    return resolve(true);
+                });
+            } else {
+                console.log(`No hay conexión para procesar update ${this.version}`);
+                return resolve(false);
+            }
+        })
     }
 }
