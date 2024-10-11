@@ -6,7 +6,8 @@ export function getMSCofnig() {
   const msconfig: sch_msconfig = {
     mscode: process.env.MSCODE || "MSXX",
     msinstance: process.env.MSINSTANCE || "UNICA",
-    msdb: process.env.MSDB || "MSXX"
+    msdb: process.env.MSDB || "MSXX",
+    version:0
   }
   return msconfig
 }

@@ -38,11 +38,15 @@ export class mod_dataaccess {
         console.log("Se debe definir crearMSDBData para", this.mscode, this.instancia, this.database);
        return false
     }
+    obtenerCreateString(): string { 
+        let sql = "CREATE TABLE config (mscode varchar(30) NOT NULL,instancia varchar(30) NOT NULL,msdb varchar(30) DEFAULT NULL,version decimal(12,0) NOT NULL DEFAULT '0')"
+        sql += 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;';
+        return sql;
+    }
     async crearMSDBConfig(): Promise<boolean> {
         this.Connection = this.obtenerConexion();
+        let sql = this.obtenerCreateString();
         if (this.Connection) {
-            let sql = 'CREATE TABLE config (mscode varchar(30) NOT NULL,instancia varchar(30) NOT NULL,msdb varchar(30) DEFAULT NULL)'
-            sql += 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;';
             return new Promise((resolve, reject) => {
                 this.Connection!.query(sql, async (err: any, result: any) => {
                     if (err) {
