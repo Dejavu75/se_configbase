@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.mod_dataaccess = void 0;
 const mysql2_1 = __importDefault(require("mysql2"));
 const conf_default_config_1 = require("../controllers/conf_default_config");
+const mod_dataupdater_1 = require("./mod_dataupdater");
 class mod_dataaccess {
     constructor(mscode = "", instancia = "", database = "") {
         this.Connection = undefined;
@@ -128,9 +129,20 @@ class mod_dataaccess {
                         }
                     }
                     console.log("Conectada a la base de datos " + this.Connection.config.database);
-                    return resolve(this.Connection);
+                    yield this.controlarUpdates().then((result) => {
+                        return resolve(this.Connection);
+                    });
                 }));
             });
+        });
+    }
+    obtenerUpdates() {
+        return new mod_dataupdater_1.mod_dataupdater(this.mscode, this.instancia);
+    }
+    controlarUpdates() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let oUpdater = this.obtenerUpdates();
+            return yield oUpdater.iniciarUpdates(this.Connection);
         });
     }
     obtenerMySQLConfig() {

@@ -1,6 +1,7 @@
 import mysql, { Connection } from "mysql2";
 import { sch_configbase } from "se_contractholder/build/MS08/database";
 import { getMSCofnig, getMySQLConfig } from "../controllers/conf_default_config";
+import { mod_dataupdater } from "./mod_dataupdater";
 
 
 export class mod_dataaccess {
@@ -29,16 +30,16 @@ export class mod_dataaccess {
         return connection;
     }
     async controlarMSDATA() {
-       return this.controlarConfigBase().then(async (oConfig) => {
-        await this.controlarMSDB();
-       });
+        return this.controlarConfigBase().then(async (oConfig) => {
+            await this.controlarMSDB();
+        });
 
     }
     async crearMSDBData(): Promise<boolean> {
         console.log("Se debe definir crearMSDBData para", this.mscode, this.instancia, this.database);
-       return false
+        return false
     }
-    obtenerCreateString(): string { 
+    obtenerCreateString(): string {
         let sql = "CREATE TABLE config (mscode varchar(30) NOT NULL,instancia varchar(30) NOT NULL,msdb varchar(30) DEFAULT NULL,version decimal(12,0) NOT NULL DEFAULT '0')"
         sql += 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;';
         return sql;
@@ -102,12 +103,23 @@ export class mod_dataaccess {
                         }
                     }
                 }
+
                 console.log("Conectada a la base de datos " + this.Connection!.config.database);
-                return resolve(this.Connection!);
+                await this.controlarUpdates().then((result) => {
+                    return resolve(this.Connection!);
+                })
             });
         });
     }
-    obtenerMySQLConfig(){
+    obtenerUpdates(){
+        return new mod_dataupdater(this.mscode, this.instancia);
+    }
+    async controlarUpdates(): Promise<boolean> {
+        let oUpdater = this.obtenerUpdates();
+
+        return await oUpdater.iniciarUpdates(this.Connection)
+    }
+    obtenerMySQLConfig() {
         return getMySQLConfig();
     }
     obtenerConfigBase(): Connection {
