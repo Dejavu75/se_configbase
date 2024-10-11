@@ -97,11 +97,24 @@ class mod_update {
     }
     procesarUpdate(oCon) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.sql == "SQL2") {
-                return Promise.reject(false);
-            }
             console.log("Update procesado ", this.version, this.sql);
-            return Promise.resolve(true);
+            return new Promise((resolve, reject) => {
+                if (oCon) {
+                    oCon.query(this.sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            console.log(`Error al procesar update ${this.version}`, err);
+                            return reject(false);
+                        }
+                        console.log(`Procesado update ${this.version}`);
+                        console.log(`SQL: ${this.sql}`);
+                        return resolve(true);
+                    }));
+                }
+                else {
+                    console.log(`No hay conexión para procesar update ${this.version}`);
+                    return resolve(false);
+                }
+            });
         });
     }
 }
