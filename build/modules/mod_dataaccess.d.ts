@@ -9,6 +9,7 @@ export declare class mod_dataaccess {
     obtenerConexion(): Connection;
     controlarMSDATA(): Promise<void>;
     crearMSDBData(): Promise<boolean>;
+    obtenerCreateString(): string;
     crearMSDBConfig(): Promise<boolean>;
     crearMSDB(): Promise<boolean>;
     controlarMSDB(): Promise<Connection | null>;

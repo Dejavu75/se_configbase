@@ -42,4 +42,5 @@ export type sch_msconfig = {
     mscode: string;
     msinstance: string;
     msdb: string;
+    version: number;
 };
