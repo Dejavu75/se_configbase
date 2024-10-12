@@ -19,13 +19,14 @@ export class mod_dataaccess {
         this.instancia = instancia;
         this.database = database;
     }
-    obtenerConexion(): Connection {
+    obtenerConexion(multiple:boolean=false): Connection {
         let oConfig = getMySQLConfig();
         let connection: Connection = mysql.createConnection({
             host: oConfig.host || 'localhost',
             user: oConfig.user || 'user',
             password: oConfig.password || 'password',
-            database: this.database
+            database: this.database,
+            multipleStatements: multiple
         });
         return connection;
     }
@@ -116,19 +117,20 @@ export class mod_dataaccess {
     }
     async controlarUpdates(): Promise<boolean> {
         let oUpdater = this.obtenerUpdates();
-
+        this.Connection!.config.multipleStatements = true;
         return await oUpdater.iniciarUpdates(this.Connection)
     }
     obtenerMySQLConfig() {
         return getMySQLConfig();
     }
-    obtenerConfigBase(): Connection {
+    obtenerConfigBase(multiple:boolean=false): Connection {
         let oConfig = this.obtenerMySQLConfig();
         let connection: Connection = mysql.createConnection({
             host: oConfig.host || 'localhost',
             user: oConfig.user || 'user',
             password: oConfig.password || 'password',
-            database: 'configbase'
+            database: 'configbase',
+            multipleStatements: true            
         });
         return connection;
     }

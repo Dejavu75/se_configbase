@@ -2,24 +2,28 @@
 import { mod_dataaccess } from "../modules/mod_dataaccess"
 import { describe, it } from "node:test"
 import { mod_dataupdater, mod_update } from "../modules/mod_dataupdater"
-import mysql, { Connection } from "mysql2";
-import { getMySQLConfig } from "../controllers/conf_default_config";
+import { Connection } from "mysql2";
 
 let oCon = new mod_dataaccess();
 
-class mod2 extends mod_dataupdater {
+export class mod2 extends mod_dataupdater {
     constructor() {
         super(oCon.mscode, oCon.instancia);
     }
-    crearUpdates() {
-        this.updates.push(new mod_update(1, "SQL1"));
-        this.updates.push(new mod_update(2, "SQL32"));
-        this.updates.push(new mod_update(3, "SQL3"));
-        this.updates.push(new mod_update(4, "SQL4"));        
+    crearPreUpdates() {
+        this.preupdates.push(new mod_update(1, "Update config set version=0;"));
+        this.preupdates.push(new mod_update(2, "DROP TABLE IF EXISTS prueba1, prueba2, prueba3, prueba4;"));        
+        
     }
-    obtenerConexion(): Connection {
+    crearUpdates() {
+        this.updates.push(new mod_update(1, "CREATE TABLE `prueba1` (`tabla1` INT NOT NULL ) ENGINE = InnoDB;"));
+        this.updates.push(new mod_update(2, "CREATE TABLE `prueba2` (`tabla2` INT NOT NULL ) ENGINE = InnoDB;"));        
+        this.updates.push(new mod_update(3, "CREATE TABLE `prueba3` (`tabla3` INT NOT NULL ) ENGINE = InnoDB;" ));                
+        this.updates.push(new mod_update(3, "CREATE TABLE `prueba3` (`tabla3` INT NOT NULL ) ENGINE = InnoDB; select * from prueba3" ));                
+    }
+    obtenerConexion(multipleStatements:boolean=false): Connection {
         let oCon = new mod_dataaccess();
-        return oCon.obtenerConexion();
+        return oCon.obtenerConexion(multipleStatements = true);
     }
 }
 
@@ -34,7 +38,7 @@ describe('Procesar Updates', () => {
         expect(mod3.updates[2].version).toBe(3);
     });
     test('Controlar UPDATE Process', async () => {
-        await mod3.iniciarUpdates(mod3.obtenerConexion()).then((result) => {
+        await mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {
             expect(result).toBe(true);
             expect(mod3.actual_version).toBe(mod3.updates.length);
         })
