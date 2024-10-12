@@ -15,12 +15,20 @@ class mod_dataupdater {
         this.mscode = "";
         this.instancia = "";
         this.actual_version = 0;
+        this.actual_preversion = 0;
         this.updates = [];
+        this.preupdates = [];
         this.mscode = mscode;
         this.instancia = instancia;
         this.actual_version = actual_version;
         this.updates = updates;
+        this.crearPreUpdates();
         this.crearUpdates();
+    }
+    preUpdatesProcess(oCon) {
+        return Promise.resolve(true);
+    }
+    crearPreUpdates() {
     }
     crearUpdates() {
     }
@@ -61,9 +69,33 @@ class mod_dataupdater {
                         this.actual_version = 0;
                     }
                     console.log(`Iniciando updates para ${this.mscode}-${this.instancia} en version ${this.actual_version}`);
-                    return resolve(yield this.procesarUpdates(oCon, this.actual_version));
+                    if (yield this.procesarPreUpdates(oCon, this.actual_preversion)) {
+                        resolve(yield this.procesarUpdates(oCon, this.actual_version));
+                    }
+                    else {
+                        resolve(false);
+                    }
                 }));
             });
+        });
+    }
+    procesarPreUpdates(oCon_1) {
+        return __awaiter(this, arguments, void 0, function* (oCon, version = this.actual_preversion) {
+            if (version >= this.preupdates.length)
+                return true;
+            const result = yield this.procesarPreUpdate(this.preupdates[version], oCon);
+            if (result) {
+                this.actual_preversion = version + 1;
+                return this.procesarPreUpdates(oCon, this.actual_preversion);
+            }
+            else {
+                return false;
+            }
+        });
+    }
+    procesarPreUpdate(update, oCon) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield update.procesarUpdate(oCon);
         });
     }
     procesarUpdates(oCon_1) {

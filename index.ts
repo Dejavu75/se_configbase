@@ -16,5 +16,5 @@ export * from './controllers/con_log';
 //     console.log("Error en controlarMSDATA", err);
 // });
 
-let mod3: mod2 = new mod2();
-mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {console.log(result)});
+// let mod3: mod2 = new mod2();
+// mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {console.log(result)});

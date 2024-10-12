@@ -7,7 +7,7 @@ export declare class mod_dataaccess {
     instancia: string;
     database: string;
     constructor(mscode?: string, instancia?: string, database?: string);
-    obtenerConexion(): Connection;
+    obtenerConexion(multiple?: boolean): Connection;
     controlarMSDATA(): Promise<void>;
     crearMSDBData(): Promise<boolean>;
     obtenerCreateString(): string;
@@ -17,7 +17,7 @@ export declare class mod_dataaccess {
     obtenerUpdates(): mod_dataupdater;
     controlarUpdates(): Promise<boolean>;
     obtenerMySQLConfig(): import("..").MySQLConfig;
-    obtenerConfigBase(): Connection;
+    obtenerConfigBase(multiple?: boolean): Connection;
     inicializarConfigBase(): Promise<sch_configbase | null>;
     controlarConfigBase(): Promise<sch_configbase | null>;
     conexionBase(): Promise<Connection>;

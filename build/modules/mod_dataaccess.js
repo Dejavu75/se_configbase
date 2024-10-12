@@ -33,13 +33,14 @@ class mod_dataaccess {
         this.instancia = instancia;
         this.database = database;
     }
-    obtenerConexion() {
+    obtenerConexion(multiple = false) {
         let oConfig = (0, conf_default_config_1.getMySQLConfig)();
         let connection = mysql2_1.default.createConnection({
             host: oConfig.host || 'localhost',
             user: oConfig.user || 'user',
             password: oConfig.password || 'password',
-            database: this.database
+            database: this.database,
+            multipleStatements: multiple
         });
         return connection;
     }
@@ -142,19 +143,21 @@ class mod_dataaccess {
     controlarUpdates() {
         return __awaiter(this, void 0, void 0, function* () {
             let oUpdater = this.obtenerUpdates();
+            this.Connection.config.multipleStatements = true;
             return yield oUpdater.iniciarUpdates(this.Connection);
         });
     }
     obtenerMySQLConfig() {
         return (0, conf_default_config_1.getMySQLConfig)();
     }
-    obtenerConfigBase() {
+    obtenerConfigBase(multiple = false) {
         let oConfig = this.obtenerMySQLConfig();
         let connection = mysql2_1.default.createConnection({
             host: oConfig.host || 'localhost',
             user: oConfig.user || 'user',
             password: oConfig.password || 'password',
-            database: 'configbase'
+            database: 'configbase',
+            multipleStatements: true
         });
         return connection;
     }

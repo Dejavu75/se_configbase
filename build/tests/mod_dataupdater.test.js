@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.mod2 = void 0;
 const mod_dataaccess_1 = require("../modules/mod_dataaccess");
 const node_test_1 = require("node:test");
 const mod_dataupdater_1 = require("../modules/mod_dataupdater");
@@ -17,17 +18,22 @@ class mod2 extends mod_dataupdater_1.mod_dataupdater {
     constructor() {
         super(oCon.mscode, oCon.instancia);
     }
-    crearUpdates() {
-        this.updates.push(new mod_dataupdater_1.mod_update(1, "SQL1"));
-        this.updates.push(new mod_dataupdater_1.mod_update(2, "SQL32"));
-        this.updates.push(new mod_dataupdater_1.mod_update(3, "SQL3"));
-        this.updates.push(new mod_dataupdater_1.mod_update(4, "SQL4"));
+    crearPreUpdates() {
+        this.preupdates.push(new mod_dataupdater_1.mod_update(1, "Update config set version=0;"));
+        this.preupdates.push(new mod_dataupdater_1.mod_update(2, "DROP TABLE IF EXISTS prueba1, prueba2, prueba3, prueba4;"));
     }
-    obtenerConexion() {
+    crearUpdates() {
+        this.updates.push(new mod_dataupdater_1.mod_update(1, "CREATE TABLE `prueba1` (`tabla1` INT NOT NULL ) ENGINE = InnoDB;"));
+        this.updates.push(new mod_dataupdater_1.mod_update(2, "CREATE TABLE `prueba2` (`tabla2` INT NOT NULL ) ENGINE = InnoDB;"));
+        this.updates.push(new mod_dataupdater_1.mod_update(3, "CREATE TABLE `prueba3` (`tabla3` INT NOT NULL ) ENGINE = InnoDB;"));
+        this.updates.push(new mod_dataupdater_1.mod_update(3, "CREATE TABLE `prueba3` (`tabla3` INT NOT NULL ) ENGINE = InnoDB; select * from prueba3"));
+    }
+    obtenerConexion(multipleStatements = false) {
         let oCon = new mod_dataaccess_1.mod_dataaccess();
-        return oCon.obtenerConexion();
+        return oCon.obtenerConexion(multipleStatements = true);
     }
 }
+exports.mod2 = mod2;
 (0, node_test_1.describe)('Procesar Updates', () => {
     let mod3 = new mod2();
     test('Controlar UPDATE Creation', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -38,7 +44,7 @@ class mod2 extends mod_dataupdater_1.mod_dataupdater {
         expect(mod3.updates[2].version).toBe(3);
     }));
     test('Controlar UPDATE Process', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield mod3.iniciarUpdates(mod3.obtenerConexion()).then((result) => {
+        yield mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {
             expect(result).toBe(true);
             expect(mod3.actual_version).toBe(mod3.updates.length);
         });
