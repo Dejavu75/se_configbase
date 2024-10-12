@@ -1,13 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMSCofnig = getMSCofnig;
+exports.getMSIdentity = getMSIdentity;
+exports.getMSConfig = getMSConfig;
 exports.getMySQLConfig = getMySQLConfig;
 exports.getServingConfig = getServingConfig;
 exports.getLocalDirConfig = getLocalDirConfig;
 exports.getAfipConfig = getAfipConfig;
 exports.getSettingsConfig = getSettingsConfig;
 require('dotenv').config();
-function getMSCofnig() {
+function getMSIdentity() {
+    const msidentity = {
+        mscode: process.env.MSCODE || "MSXX",
+        msinstance: process.env.MSINSTANCE || "UNICA",
+        version: parseInt(process.env.MSVERSION || ""),
+        url: process.env.MSURL || "",
+        expectedInterval: parseInt(process.env.MSMONINTERVAL || "600")
+    };
+    return msidentity;
+}
+function getMSConfig() {
     const msconfig = {
         mscode: process.env.MSCODE || "MSXX",
         msinstance: process.env.MSINSTANCE || "UNICA",

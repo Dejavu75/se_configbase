@@ -1,6 +1,6 @@
 import mysql, { Connection } from "mysql2";
 import { sch_configbase } from "se_contractholder/build/MS08/database";
-import { getMSCofnig, getMySQLConfig } from "../controllers/conf_default_config";
+import { getMSConfig, getMySQLConfig } from "../controllers/conf_default_config";
 import { mod_dataupdater } from "./mod_dataupdater";
 
 
@@ -10,7 +10,7 @@ export class mod_dataaccess {
     instancia = "";
     database = "";
     constructor(mscode: string = "", instancia: string = "", database: string = "") {
-        let oConfig = getMSCofnig();
+        let oConfig = getMSConfig();
         if (mscode === "") mscode = oConfig.mscode;
         if (instancia === "") instancia = oConfig.msinstance;
         if (database === "") database = oConfig.msdb;

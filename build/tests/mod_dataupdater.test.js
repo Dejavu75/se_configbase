@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mod2 = void 0;
 const mod_dataaccess_1 = require("../modules/mod_dataaccess");
 const node_test_1 = require("node:test");
 const mod_dataupdater_1 = require("../modules/mod_dataupdater");
@@ -33,7 +32,6 @@ class mod2 extends mod_dataupdater_1.mod_dataupdater {
         return oCon.obtenerConexion(multipleStatements = true);
     }
 }
-exports.mod2 = mod2;
 (0, node_test_1.describe)('Procesar Updates', () => {
     let mod3 = new mod2();
     test('Controlar UPDATE Creation', () => __awaiter(void 0, void 0, void 0, function* () {

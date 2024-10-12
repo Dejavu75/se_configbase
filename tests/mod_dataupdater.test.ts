@@ -6,7 +6,7 @@ import { Connection } from "mysql2";
 
 let oCon = new mod_dataaccess();
 
-export class mod2 extends mod_dataupdater {
+class mod2 extends mod_dataupdater {
     constructor() {
         super(oCon.mscode, oCon.instancia);
     }

@@ -1,6 +1,3 @@
-import { mod_dataaccess } from './modules/mod_dataaccess';
-import { mod2 } from './tests/mod_dataupdater.test';
-
 export * from './schemas/sch_config';
 export * from './controllers/conf_default_config';
 export * from './modules/mod_dataaccess';

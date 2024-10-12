@@ -22,7 +22,7 @@ class mod_dataaccess {
         this.mscode = "";
         this.instancia = "";
         this.database = "";
-        let oConfig = (0, conf_default_config_1.getMSCofnig)();
+        let oConfig = (0, conf_default_config_1.getMSConfig)();
         if (mscode === "")
             mscode = oConfig.mscode;
         if (instancia === "")

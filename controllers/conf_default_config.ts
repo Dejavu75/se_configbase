@@ -1,8 +1,18 @@
-import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig } from "../schemas/sch_config"
+import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity } from "../schemas/sch_config"
 
 require('dotenv').config();
 
-export function getMSCofnig() {
+export function getMSIdentity() {
+  const msidentity: sch_msidentity = {
+    mscode: process.env.MSCODE || "MSXX",
+    msinstance: process.env.MSINSTANCE || "UNICA",
+    version: parseInt(process.env.MSVERSION || ""),
+    url: process.env.MSURL || "",
+    expectedInterval: parseInt(process.env.MSMONINTERVAL || "600")
+  }
+  return msidentity
+}
+export function getMSConfig() {
   const msconfig: sch_msconfig = {
     mscode: process.env.MSCODE || "MSXX",
     msinstance: process.env.MSINSTANCE || "UNICA",

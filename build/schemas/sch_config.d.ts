@@ -44,3 +44,10 @@ export type sch_msconfig = {
     msdb: string;
     version: number;
 };
+export type sch_msidentity = {
+    mscode: string;
+    msinstance: string;
+    version: number;
+    url: string;
+    expectedInterval: number;
+};
