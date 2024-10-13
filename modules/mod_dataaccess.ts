@@ -28,13 +28,13 @@ export class mod_dataaccess {
             database: this.database,
             multipleStatements: multiple
         });
-        console.log("Conexión a la base de datos", connection.config);
+        //console.log("Conexión a la base de datos", connection.config);
         return connection;
     }
     async controlarMSDATA() {
-        console.log("ControlarMSDATA");
+        //console.log("ControlarMSDATA");
         return this.controlarConfigBase().then(async (oConfig) => {
-            console.log("controlarConfigBase then ", oConfig);
+            //console.log("controlarConfigBase then ", oConfig);
             await this.controlarMSDB();
         });
 
@@ -50,53 +50,53 @@ export class mod_dataaccess {
         return sql;
     }
     async crearMSDBConfig(): Promise<boolean> {
-        console.log("crearMSDBConfig");
+        //console.log("crearMSDBConfig");
         this.Connection = this.obtenerConexion();
         let sql = this.obtenerCreateString();
         if (this.Connection) {
             return new Promise((resolve, reject) => {
-                console.log("crearMSDBConfig promise");
+                //console.log("crearMSDBConfig promise");
                 this.Connection!.query(sql, async (err: any, result: any) => {
-                    console.log("crearMSDBConfig query");
+                    //console.log("crearMSDBConfig query");
                     if (err) {
                         this.Connection!.end();
-                        console.log("Error al crear base de datos", err);
+                        console.error("Error al crear base de datos", err);
                         return reject(false);
                     }
-                    console.log("crearMSDBConfig insert");
+                    //console.log("crearMSDBConfig insert");
                     sql = `INSERT INTO config (mscode, instancia, msdb) VALUES ('${this.mscode}', '${this.instancia}', '${this.database}')`;
                     this.Connection!.query(sql, async (err: any, result: any) => {
-                        console.log("crearMSDBConfig insert dentro");
+                        //console.log("crearMSDBConfig insert dentro");
                         if (err) {
                             this.Connection!.end();
-                            console.log("Error al registro de configuración", err);
+                            console.error("Error al registro de configuración", err);
                             return reject(false);
                         }
-                        console.log("crearMSDBConfig insert resolve");
+                        //console.log("crearMSDBConfig insert resolve");
                         resolve(true);
                     });
                 });
             });
         } else {
-            console.log("crearMSDBConfig No se pudo establecer la conexión a la base de datos");
+            console.error("crearMSDBConfig No se pudo establecer la conexión a la base de datos");
             return Promise.reject('No se pudo establecer la conexión a la base de datos'); // Rechazamos la promesa
         }
     }
     async crearMSDB(): Promise<boolean> {
-        console.log("crearMSDB");
+        //console.log("crearMSDB");
         let oCon: Connection = this.obtenerConfigBase();
         if (oCon) {
-            console.log("crearMSDB Conexión establecida");
+            //console.log("crearMSDB Conexión establecida");
             let sql = `CREATE DATABASE ${this.database}`;
             return new Promise((resolve, reject) => {
-                console.log("crearMSDB query");
+                //console.log("crearMSDB query");
                 oCon.query(sql, async (err: any, result: any) => {
                     oCon.end();
                     if (err) {
-                        console.log("Error al crear base de datos", err);
+                        console.error("Error al crear base de datos", err);
                         return reject(false);
                     }
-                    console.log("crearMSDB preawait ");
+                    //console.log("crearMSDB preawait ");
                     await this.crearMSDBConfig()
                     resolve(true);
                 });
@@ -106,25 +106,25 @@ export class mod_dataaccess {
         }
     }
     async controlarMSDB(): Promise<Connection | null> {
-        console.log("controlarMSDB ");
+        //console.log("controlarMSDB ");
         this.Connection = this.obtenerConexion();
         return new Promise((resolve, reject) => {
-            console.log("controlarMSDB promise");
+            //console.log("controlarMSDB promise");
             this.Connection!.connect(async (err) => {
                 if (err) {
                     if (err.code === 'ER_BAD_DB_ERROR') {
-                        console.log("precrearMSDB");
+                        //console.log("precrearMSDB");
                         if (await this.crearMSDB()) {
-                            console.log("if crearMSDB");
+                            //console.log("if crearMSDB");
                             return resolve(this.Connection!);
                         } else {
-                            console.log("Error al conectar a la base MS", this.Connection!.config.database, err);
+                            console.error("Error al conectar a la base MS", this.Connection!.config.database, err);
                             return reject(null);
                         }
                     }
                 }
 
-                console.log("Conectada a la base de datos " + this.Connection!.config.database);
+                //console.log("Conectada a la base de datos " + this.Connection!.config.database);
                 await this.controlarUpdates().then((result) => {
                     return resolve(this.Connection!);
                 })
