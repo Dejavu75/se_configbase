@@ -42,11 +42,14 @@ class mod_dataaccess {
             database: this.database,
             multipleStatements: multiple
         });
+        console.log("Conexión a la base de datos", connection.config);
         return connection;
     }
     controlarMSDATA() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("ControlarMSDATA");
             return this.controlarConfigBase().then((oConfig) => __awaiter(this, void 0, void 0, function* () {
+                console.log("controlarConfigBase then ", oConfig);
                 yield this.controlarMSDB();
             }));
         });
@@ -64,45 +67,56 @@ class mod_dataaccess {
     }
     crearMSDBConfig() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("crearMSDBConfig");
             this.Connection = this.obtenerConexion();
             let sql = this.obtenerCreateString();
             if (this.Connection) {
                 return new Promise((resolve, reject) => {
+                    console.log("crearMSDBConfig promise");
                     this.Connection.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
+                        console.log("crearMSDBConfig query");
                         if (err) {
                             this.Connection.end();
                             console.log("Error al crear base de datos", err);
                             return reject(false);
                         }
+                        console.log("crearMSDBConfig insert");
                         sql = `INSERT INTO config (mscode, instancia, msdb) VALUES ('${this.mscode}', '${this.instancia}', '${this.database}')`;
                         this.Connection.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
+                            console.log("crearMSDBConfig insert dentro");
                             if (err) {
                                 this.Connection.end();
                                 console.log("Error al registro de configuración", err);
                                 return reject(false);
                             }
+                            console.log("crearMSDBConfig insert resolve");
                             resolve(true);
                         }));
                     }));
                 });
             }
             else {
+                console.log("crearMSDBConfig No se pudo establecer la conexión a la base de datos");
                 return Promise.reject('No se pudo establecer la conexión a la base de datos'); // Rechazamos la promesa
             }
         });
     }
     crearMSDB() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("crearMSDB");
             let oCon = this.obtenerConfigBase();
             if (oCon) {
+                console.log("crearMSDB Conexión establecida");
                 let sql = `CREATE DATABASE ${this.database}`;
                 return new Promise((resolve, reject) => {
+                    console.log("crearMSDB query");
                     oCon.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
                         oCon.end();
                         if (err) {
                             console.log("Error al crear base de datos", err);
                             return reject(false);
                         }
+                        console.log("crearMSDB preawait ");
                         yield this.crearMSDBConfig();
                         resolve(true);
                     }));
@@ -115,12 +129,16 @@ class mod_dataaccess {
     }
     controlarMSDB() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("controlarMSDB ");
             this.Connection = this.obtenerConexion();
             return new Promise((resolve, reject) => {
+                console.log("controlarMSDB promise");
                 this.Connection.connect((err) => __awaiter(this, void 0, void 0, function* () {
                     if (err) {
                         if (err.code === 'ER_BAD_DB_ERROR') {
+                            console.log("precrearMSDB");
                             if (yield this.crearMSDB()) {
+                                console.log("if crearMSDB");
                                 return resolve(this.Connection);
                             }
                             else {
@@ -142,6 +160,7 @@ class mod_dataaccess {
     }
     controlarUpdates() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("Controlar updates");
             let oUpdater = this.obtenerUpdates();
             this.Connection.config.multipleStatements = true;
             return yield oUpdater.iniciarUpdates(this.Connection);
@@ -159,19 +178,25 @@ class mod_dataaccess {
             database: 'configbase',
             multipleStatements: true
         });
+        console.log("Obtener ConfigBase ", connection.config);
         return connection;
     }
     // Registra el nuevo MS en la base de configuración
     inicializarConfigBase() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("Iniciar ConfigBase ");
             let oCon = yield this.conexionBase();
             if (oCon) {
+                console.log("Insert ConfigBase ");
                 let sql = `INSERT INTO configbase.config (mscode, instancia, msdb) VALUES ('${this.mscode}', '${this.instancia}', '${this.database}')`;
                 return new Promise((resolve, reject) => {
+                    console.log("ConfigBase Promise");
                     oCon.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
+                        console.log("ConfigBase Query");
                         oCon.end();
                         if (err)
                             reject(null);
+                        console.log("ConfigBase Resolve");
                         resolve(yield this.controlarConfigBase());
                     }));
                 });
@@ -184,11 +209,14 @@ class mod_dataaccess {
     //Obtiene la DB del MS
     controlarConfigBase() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("controlarConfigBase");
             let oCon = yield this.conexionBase();
             if (oCon) {
                 let sql = `SELECT * FROM configbase.config WHERE mscode='${this.mscode}' AND instancia='${this.instancia}'`;
                 return new Promise((resolve, reject) => {
+                    console.log("controlarConfigBase Promise");
                     oCon.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
+                        console.log("controlarConfigBase Query");
                         oCon.end();
                         if (err) {
                             console.log("Error al consultar configBase", err);
@@ -196,6 +224,7 @@ class mod_dataaccess {
                         }
                         if (result.length == 0) {
                             try {
+                                console.log("Pre Inicializar");
                                 const res = yield this.inicializarConfigBase(); // Espera que se resuelva la promesa
                                 return resolve(res);
                             }
@@ -215,14 +244,16 @@ class mod_dataaccess {
     }
     conexionBase() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("ConexionBase");
             let oCon = this.obtenerConfigBase();
             return new Promise((resolve, reject) => {
+                console.log("conexionBase Connect");
                 oCon.connect((err) => {
                     if (err) {
-                        console.log("Error al conectar", err);
+                        console.log("conexionBase Error al conectar", err);
                         return reject(err);
                     }
-                    console.log("Conectada a la base de datos " + oCon.config.host);
+                    console.log("conexionBase Conectada a la base de datos " + oCon.config.host);
                     return resolve(oCon);
                 });
             });
