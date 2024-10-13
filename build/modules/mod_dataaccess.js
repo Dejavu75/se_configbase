@@ -160,7 +160,7 @@ class mod_dataaccess {
     }
     controlarUpdates() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Controlar updates");
+            //console.log("Controlar updates")
             let oUpdater = this.obtenerUpdates();
             this.Connection.config.multipleStatements = true;
             return yield oUpdater.iniciarUpdates(this.Connection);
@@ -178,7 +178,7 @@ class mod_dataaccess {
             database: 'configbase',
             multipleStatements: true
         });
-        console.log("Obtener ConfigBase ", connection.config);
+        //console.log("Obtener ConfigBase ", connection.config);
         return connection;
     }
     // Registra el nuevo MS en la base de configuración
@@ -187,16 +187,16 @@ class mod_dataaccess {
             console.log("Iniciar ConfigBase ");
             let oCon = yield this.conexionBase();
             if (oCon) {
-                console.log("Insert ConfigBase ");
+                //console.log("Insert ConfigBase ");
                 let sql = `INSERT INTO configbase.config (mscode, instancia, msdb) VALUES ('${this.mscode}', '${this.instancia}', '${this.database}')`;
                 return new Promise((resolve, reject) => {
-                    console.log("ConfigBase Promise");
+                    //console.log("ConfigBase Promise");
                     oCon.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
-                        console.log("ConfigBase Query");
+                        //console.log("ConfigBase Query");
                         oCon.end();
                         if (err)
                             reject(null);
-                        console.log("ConfigBase Resolve");
+                        //console.log("ConfigBase Resolve");
                         resolve(yield this.controlarConfigBase());
                     }));
                 });
@@ -209,22 +209,22 @@ class mod_dataaccess {
     //Obtiene la DB del MS
     controlarConfigBase() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("controlarConfigBase");
+            //console.log("controlarConfigBase");
             let oCon = yield this.conexionBase();
             if (oCon) {
                 let sql = `SELECT * FROM configbase.config WHERE mscode='${this.mscode}' AND instancia='${this.instancia}'`;
                 return new Promise((resolve, reject) => {
-                    console.log("controlarConfigBase Promise");
+                    //console.log("controlarConfigBase Promise");
                     oCon.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
-                        console.log("controlarConfigBase Query");
+                        //console.log("controlarConfigBase Query");
                         oCon.end();
                         if (err) {
-                            console.log("Error al consultar configBase", err);
+                            console.error("Error al consultar configBase", err);
                             return reject(null);
                         }
                         if (result.length == 0) {
                             try {
-                                console.log("Pre Inicializar");
+                                //console.log("Pre Inicializar");
                                 const res = yield this.inicializarConfigBase(); // Espera que se resuelva la promesa
                                 return resolve(res);
                             }
@@ -244,16 +244,16 @@ class mod_dataaccess {
     }
     conexionBase() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("ConexionBase");
+            //console.log("ConexionBase");        
             let oCon = this.obtenerConfigBase();
             return new Promise((resolve, reject) => {
-                console.log("conexionBase Connect");
+                //console.log("conexionBase Connect");
                 oCon.connect((err) => {
                     if (err) {
-                        console.log("conexionBase Error al conectar", err);
+                        console.error("conexionBase Error al conectar", err);
                         return reject(err);
                     }
-                    console.log("conexionBase Conectada a la base de datos " + oCon.config.host);
+                    //console.log("conexionBase Conectada a la base de datos " + oCon.config.host);
                     return resolve(oCon);
                 });
             });
