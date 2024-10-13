@@ -40,7 +40,7 @@ class mod_dataupdater {
                     let sql = `UPDATE config SET version = ${this.actual_version} WHERE mscode = '${this.mscode}' AND instancia = '${this.instancia}'`;
                     oCon.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
                         if (err) {
-                            console.log(`Error al avanzar version a ${this.actual_version}`, err);
+                            console.error(`Error al avanzar version a ${this.actual_version}`, err);
                             return reject(false);
                         }
                         console.log(`Avanzado ${this.mscode}-${this.instancia} a ${this.actual_version}`);
@@ -59,7 +59,7 @@ class mod_dataupdater {
                 let sql = `SELECT version FROM config WHERE mscode = '${this.mscode}' AND instancia = '${this.instancia}'`;
                 oCon === null || oCon === void 0 ? void 0 : oCon.query(sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
                     if (err) {
-                        console.log(`Error al obtener version`, err);
+                        console.error(`Error al obtener version`, err);
                         return reject(false);
                     }
                     if (result.length > 0) {
@@ -134,7 +134,7 @@ class mod_update {
                 if (oCon) {
                     oCon.query(this.sql, (err, result) => __awaiter(this, void 0, void 0, function* () {
                         if (err) {
-                            console.log(`Error al procesar update ${this.version}`, err);
+                            console.error(`Error al procesar update ${this.version}`, err);
                             return reject(false);
                         }
                         console.log(`Procesado update ${this.version}`);
@@ -143,7 +143,7 @@ class mod_update {
                     }));
                 }
                 else {
-                    console.log(`No hay conexión para procesar update ${this.version}`);
+                    console.error(`No hay conexión para procesar update ${this.version}`);
                     return resolve(false);
                 }
             });

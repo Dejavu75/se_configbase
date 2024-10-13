@@ -14,18 +14,17 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mod_dataaccess_1 = require("./modules/mod_dataaccess");
 __exportStar(require("./schemas/sch_config"), exports);
 __exportStar(require("./controllers/conf_default_config"), exports);
 __exportStar(require("./modules/mod_dataaccess"), exports);
 __exportStar(require("./modules/mod_dataupdater"), exports);
 __exportStar(require("./controllers/con_dataaccess"), exports);
 __exportStar(require("./controllers/con_log"), exports);
-let oCon = new mod_dataaccess_1.mod_dataaccess();
-oCon.controlarMSDATA().then((bResult) => {
-    console.log("ControlarMSDATA", oCon.database);
-}).catch((err) => {
-    console.log("Error en controlarMSDATA", err);
-});
+// let oCon = new mod_dataaccess();
+// oCon.controlarMSDATA().then((bResult) => {
+//     console.log("ControlarMSDATA", oCon.database);
+// }).catch((err) => {
+//     console.log("Error en controlarMSDATA", err);
+// });
 // let mod3: mod2 = new mod2();
 // mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {console.log(result)});
