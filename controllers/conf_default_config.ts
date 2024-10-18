@@ -1,7 +1,13 @@
+import { cnt_heartbeat } from "se_contractholder";
 import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity } from "../schemas/sch_config"
 
 require('dotenv').config();
-
+export function getHeartBeat(){
+  let cntB:cnt_heartbeat = cnt_heartbeat.fromMSIdentity(getMSIdentity())
+  cntB.status = "OK"
+  cntB.action = "beat"
+  return cntB
+}
 export function getMSIdentity() {
   const msidentity: sch_msidentity = {
     mscode: process.env.MSCODE || "MSXX",

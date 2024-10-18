@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getHeartBeat = getHeartBeat;
 exports.getMSIdentity = getMSIdentity;
 exports.getMSConfig = getMSConfig;
 exports.getMySQLConfig = getMySQLConfig;
@@ -7,7 +8,14 @@ exports.getServingConfig = getServingConfig;
 exports.getLocalDirConfig = getLocalDirConfig;
 exports.getAfipConfig = getAfipConfig;
 exports.getSettingsConfig = getSettingsConfig;
+const se_contractholder_1 = require("se_contractholder");
 require('dotenv').config();
+function getHeartBeat() {
+    let cntB = se_contractholder_1.cnt_heartbeat.fromMSIdentity(getMSIdentity());
+    cntB.status = "OK";
+    cntB.action = "beat";
+    return cntB;
+}
 function getMSIdentity() {
     const msidentity = {
         mscode: process.env.MSCODE || "MSXX",
