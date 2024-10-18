@@ -34,7 +34,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "mysql2": "^3.11.3",
-    "nodemailer": "^6.9.15",
-    "se_contractholder": "github:Dejavu75/se_contractholder"
+    "nodemailer": "^6.9.15"
   }
 }
