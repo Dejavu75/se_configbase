@@ -46,6 +46,7 @@ export type sch_msconfig = {
   msinstance: string
   msdb: string
   version:number 
+  serviceType: string  
 }
 export type sch_msidentity = {
   mscode: string
@@ -53,4 +54,5 @@ export type sch_msidentity = {
   version:number 
   url: string
   expectedInterval: number
+  serviceType: string
 }

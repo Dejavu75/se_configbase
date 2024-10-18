@@ -14,7 +14,8 @@ export function getMSIdentity() {
     msinstance: process.env.MSINSTANCE || "UNICA",
     version: parseInt(process.env.MSVERSION || ""),
     url: process.env.MSURL || "",
-    expectedInterval: parseInt(process.env.MSMONINTERVAL || "600")
+    expectedInterval: parseInt(process.env.MSMONINTERVAL || "600"),
+    serviceType: process.env.MSSERVICETYPE || "unknown",
   }
   return msidentity
 }
@@ -23,7 +24,8 @@ export function getMSConfig() {
     mscode: process.env.MSCODE || "MSXX",
     msinstance: process.env.MSINSTANCE || "UNICA",
     msdb: process.env.MSDB || "MSXX",
-    version:0
+    version:0,
+    serviceType: process.env.MSSERVICETYPE || "unknown"
   }
   return msconfig
 }
