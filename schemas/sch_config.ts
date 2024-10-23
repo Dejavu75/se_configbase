@@ -55,4 +55,5 @@ export type sch_msidentity = {
   url: string
   expectedInterval: number
   serviceType: string
+  extraData: string
 }

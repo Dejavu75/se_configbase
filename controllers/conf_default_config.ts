@@ -16,6 +16,7 @@ export function getMSIdentity() {
     url: process.env.MSURL || "",
     expectedInterval: parseInt(process.env.MSMONINTERVAL || "600"),
     serviceType: process.env.MSSERVICETYPE || "unknown",
+    extraData: process.env.MSEXTRADATA || ""
   }
   return msidentity
 }
