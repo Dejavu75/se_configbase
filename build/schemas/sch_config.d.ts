@@ -44,6 +44,7 @@ export type sch_msconfig = {
     msdb: string;
     version: number;
     serviceType: string;
+    heartbeatMonitor: string;
 };
 export type sch_msidentity = {
     mscode: string;
