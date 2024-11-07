@@ -1,5 +1,6 @@
 import mysql, { Connection } from "mysql2";
 import { mod_dataaccess } from "../modules/mod_dataaccess";
+import { cnt_heartbeat } from "se_contractholder";
 
 export class con_dataaccess{
     modData:mod_dataaccess|undefined;

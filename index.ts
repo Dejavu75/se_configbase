@@ -1,3 +1,4 @@
+import { registerService } from './controllers/conf_default_config';
 import { mod_dataaccess } from './modules/mod_dataaccess';
 
 export * from './schemas/sch_config';
@@ -17,3 +18,4 @@ export * from './controllers/con_log';
 
 // let mod3: mod2 = new mod2();
 // mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {console.log(result)});
+registerService();

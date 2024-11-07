@@ -2,6 +2,22 @@ import { cnt_heartbeat } from "se_contractholder";
 import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity } from "../schemas/sch_config"
 
 require('dotenv').config();
+export async function registerService() {
+  const cntb: cnt_heartbeat = cnt_heartbeat.fromMSIdentity(getMSIdentity())
+  cntb.status = "starting"
+  cntb.action = "register"
+  const msconfig = getMSConfig()
+  if (msconfig.heartbeatMonitor != "") {
+    const url = msconfig.heartbeatMonitor
+    const response =  fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cntb),
+    })
+  }
+}
 export function getHeartBeat(){
   let cntB:cnt_heartbeat = cnt_heartbeat.fromMSIdentity(getMSIdentity())
   cntB.status = "OK"
@@ -26,7 +42,8 @@ export function getMSConfig() {
     msinstance: process.env.MSINSTANCE || "UNICA",
     msdb: process.env.MSDB || "MSXX",
     version:0,
-    serviceType: process.env.MSSERVICETYPE || "unknown"
+    serviceType: process.env.MSSERVICETYPE || "unknown",
+    heartbeatMonitor: process.env.MSHEARTBEATMONITOR || ""
   }
   return msconfig
 }

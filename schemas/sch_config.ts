@@ -46,7 +46,8 @@ export type sch_msconfig = {
   msinstance: string
   msdb: string
   version:number 
-  serviceType: string  
+  serviceType: string 
+  heartbeatMonitor:string
 }
 export type sch_msidentity = {
   mscode: string
