@@ -18,4 +18,4 @@ export * from './controllers/con_log';
 
 // let mod3: mod2 = new mod2();
 // mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {console.log(result)});
-registerService();
+//registerService();

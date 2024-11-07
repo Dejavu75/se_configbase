@@ -14,7 +14,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const conf_default_config_1 = require("./controllers/conf_default_config");
 __exportStar(require("./schemas/sch_config"), exports);
 __exportStar(require("./controllers/conf_default_config"), exports);
 __exportStar(require("./modules/mod_dataaccess"), exports);
@@ -29,4 +28,4 @@ __exportStar(require("./controllers/con_log"), exports);
 // });
 // let mod3: mod2 = new mod2();
 // mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {console.log(result)});
-(0, conf_default_config_1.registerService)();
+//registerService();
