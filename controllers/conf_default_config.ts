@@ -15,7 +15,7 @@ export async function registerService() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(cntb),
-    }).catch(error => console.error('Error:', error));
+    }).catch(error => console.error('Error al registrar el ms: ', error.TypeError));
   }
 }
 export function getHeartBeat(){
