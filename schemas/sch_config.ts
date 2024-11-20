@@ -63,6 +63,8 @@ export type schMailSettings = {
   host: string
   port: number
   secure: boolean
+  from:string
+  fromname:string
   auth: {
       user: string
       pass: string
