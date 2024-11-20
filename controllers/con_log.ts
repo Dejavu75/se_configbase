@@ -2,7 +2,7 @@ import fs from 'fs';
 //import os from 'os';
 import { Express } from "express";
 import nodemailer from 'nodemailer';
-import { getLocalDirConfig, getSettingsConfig } from "./conf_default_config"
+import { getLocalDirConfig, getMailConfig, getSettingsConfig } from "./conf_default_config"
 
 let oconf=getLocalDirConfig();
 var colors = require('colors');
@@ -10,15 +10,9 @@ const outputFile = oconf.logdir+'/'+oconf.logfile;
 const errorFile = oconf.logdir+'/'+oconf.errorfile;
 const outputLog = fs.createWriteStream(outputFile, { flags: 'a' });
 const errorsLog = fs.createWriteStream(errorFile, { flags: 'a' });
-const transporter = nodemailer.createTransport({
-  host: 'mail.solinges.com.ar',
-  port: 465,
-  secure: true,
-  auth: {
-    user: 'nages@solinges.com.ar',
-    pass: 'Jimmyhendrix1991'
-  }
-});
+const mailConfig = getMailConfig();
+const transporter = nodemailer.createTransport(mailConfig);
+
 import { format, toZonedTime } from 'date-fns-tz';
 const timeZone = 'America/Argentina/Buenos_Aires';
 
@@ -153,7 +147,7 @@ export class AgesLog {
     }
     
     let mailOptions: MailOptions = {
-      from: 'nages@solinges.com.ar', // Dirección desde la cual se envía el correo
+      from: mailConfig.auth.user, // Dirección desde la cual se envía el correo
       to: para || "diego@solinges.com.ar", // Lista de destinatarios
       subject: asunto || "Mail desde NAGES", // Asunto
       text: texto, // Texto plano del mensaje

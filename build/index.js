@@ -13,6 +13,9 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./schemas/sch_config"), exports);
 __exportStar(require("./controllers/conf_default_config"), exports);
@@ -29,3 +32,29 @@ __exportStar(require("./controllers/con_log"), exports);
 // let mod3: mod2 = new mod2();
 // mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {console.log(result)});
 //registerService();
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const transporter = nodemailer_1.default.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'ec.solinges@gmail.com',
+        pass: ''
+    },
+});
+let respuesta = "Correo no enviado";
+let mailOptions = {
+    from: 'ec.solinges@gmail.com', // Dirección desde la cual se envía el correo
+    to: "prueba@gobeyond.com.ar; diego@solinges.com.ar", // Lista de destinatarios
+    subject: "Mail desde NAGES", // Asunto
+    text: "Texto del mail"
+};
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        respuesta = error.message;
+    }
+    else {
+        respuesta = 'Correo enviado: ' + info.response;
+    }
+    console.log(respuesta);
+});

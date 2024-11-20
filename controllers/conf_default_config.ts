@@ -1,5 +1,5 @@
 import { cnt_heartbeat } from "se_contractholder";
-import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity } from "../schemas/sch_config"
+import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config"
 
 require('dotenv').config();
 export async function registerService() {
@@ -104,4 +104,16 @@ export function getSettingsConfig() {
   if (settingsConfig.notificaciones_activaciones == "") settingsConfig.notificaciones_activaciones = settingsConfig.notificaciones_generales
   if (settingsConfig.notificaciones_debug == "") settingsConfig.notificaciones_debug = settingsConfig.notificaciones_generales
   return settingsConfig
+}
+export function getMailConfig() {
+  const mailconfig: schMailSettings = {
+    host: process.env.MAIL_HOST || 'smtp.gmail.com',
+    port: parseInt(process.env.MAIL_PORT  || "465"),
+    secure: process.env.MAIL_SECURE === 'true' || true,
+    auth: {
+      user: process.env.MAIL_USER || '',
+      pass: process.env.MAIL_PASS || ''
+    }
+  }
+  return mailconfig   ;
 }

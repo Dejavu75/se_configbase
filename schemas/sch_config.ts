@@ -58,3 +58,13 @@ export type sch_msidentity = {
   serviceType: string
   extraData: string
 }
+
+export type schMailSettings = {
+  host: string
+  port: number
+  secure: boolean
+  auth: {
+      user: string
+      pass: string
+  }
+}

@@ -18,6 +18,7 @@ exports.getServingConfig = getServingConfig;
 exports.getLocalDirConfig = getLocalDirConfig;
 exports.getAfipConfig = getAfipConfig;
 exports.getSettingsConfig = getSettingsConfig;
+exports.getMailConfig = getMailConfig;
 const se_contractholder_1 = require("se_contractholder");
 require('dotenv').config();
 function registerService() {
@@ -127,4 +128,16 @@ function getSettingsConfig() {
     if (settingsConfig.notificaciones_debug == "")
         settingsConfig.notificaciones_debug = settingsConfig.notificaciones_generales;
     return settingsConfig;
+}
+function getMailConfig() {
+    const mailconfig = {
+        host: process.env.MAIL_HOST || 'smtp.gmail.com',
+        port: parseInt(process.env.MAIL_PORT || "465"),
+        secure: process.env.MAIL_SECURE === 'true' || true,
+        auth: {
+            user: process.env.MAIL_USER || '',
+            pass: process.env.MAIL_PASS || ''
+        }
+    };
+    return mailconfig;
 }

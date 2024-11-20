@@ -1,5 +1,5 @@
 import { cnt_heartbeat } from "se_contractholder";
-import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity } from "../schemas/sch_config";
+import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config";
 export declare function registerService(): Promise<void>;
 export declare function getHeartBeat(): cnt_heartbeat;
 export declare function getMSIdentity(): sch_msidentity;
@@ -17,3 +17,4 @@ export declare function getAfipConfig(): {
     cuit: string;
 };
 export declare function getSettingsConfig(): schSettings;
+export declare function getMailConfig(): schMailSettings;

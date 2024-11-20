@@ -27,15 +27,8 @@ const outputFile = oconf.logdir + '/' + oconf.logfile;
 const errorFile = oconf.logdir + '/' + oconf.errorfile;
 const outputLog = fs_1.default.createWriteStream(outputFile, { flags: 'a' });
 const errorsLog = fs_1.default.createWriteStream(errorFile, { flags: 'a' });
-const transporter = nodemailer_1.default.createTransport({
-    host: 'mail.solinges.com.ar',
-    port: 465,
-    secure: true,
-    auth: {
-        user: 'nages@solinges.com.ar',
-        pass: 'Jimmyhendrix1991'
-    }
-});
+const mailConfig = (0, conf_default_config_1.getMailConfig)();
+const transporter = nodemailer_1.default.createTransport(mailConfig);
 const date_fns_tz_1 = require("date-fns-tz");
 const timeZone = 'America/Argentina/Buenos_Aires';
 const consoler = new console.Console(outputLog, errorsLog);
@@ -160,7 +153,7 @@ class AgesLog {
         return __awaiter(this, void 0, void 0, function* () {
             let respuesta = "Correo no enviado";
             let mailOptions = {
-                from: 'nages@solinges.com.ar', // Dirección desde la cual se envía el correo
+                from: mailConfig.auth.user, // Dirección desde la cual se envía el correo
                 to: para || "diego@solinges.com.ar", // Lista de destinatarios
                 subject: asunto || "Mail desde NAGES", // Asunto
                 text: texto, // Texto plano del mensaje
