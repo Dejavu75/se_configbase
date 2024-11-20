@@ -153,7 +153,7 @@ class AgesLog {
         return __awaiter(this, void 0, void 0, function* () {
             let respuesta = "Correo no enviado";
             let mailOptions = {
-                from: mailConfig.auth.user, // Dirección desde la cual se envía el correo
+                from: mailConfig.from, // Dirección desde la cual se envía el correo
                 to: para || "diego@solinges.com.ar", // Lista de destinatarios
                 subject: asunto || "Mail desde NAGES", // Asunto
                 text: texto, // Texto plano del mensaje

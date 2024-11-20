@@ -134,6 +134,8 @@ function getMailConfig() {
         host: process.env.MAIL_HOST || 'smtp.gmail.com',
         port: parseInt(process.env.MAIL_PORT || "465"),
         secure: process.env.MAIL_SECURE === 'true' || true,
+        from: process.env.MAIL_FROM || process.env.MAIL_USER || '',
+        fromname: process.env.MAIL_FROMNAME || 'Solinges Ecosystem',
         auth: {
             user: process.env.MAIL_USER || '',
             pass: process.env.MAIL_PASS || ''
