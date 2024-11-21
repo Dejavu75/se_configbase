@@ -149,15 +149,32 @@ class AgesLog {
             return yield this.sendMail((0, conf_default_config_1.getSettingsConfig)().notificaciones_debug, asunto, texto, filePath1, filePath2);
         });
     }
-    static sendMail(para, asunto, texto, filePath1, filePath2) {
-        return __awaiter(this, void 0, void 0, function* () {
+    static sendMail(para_1, asunto_1, texto_1) {
+        return __awaiter(this, arguments, void 0, function* (para, asunto, texto, filePath1 = "", filePath2 = "", from = "") {
             let respuesta = "Correo no enviado";
+            // Lógica para determinar el campo "from"
+            let finalFrom;
+            // Si "from" contiene un correo, úsalo directamente.
+            if (from && from.includes("@")) {
+                finalFrom = from;
+            }
+            else if (from || mailConfig.fromName) {
+                // Si "from" o "fromName" contienen solo un nombre, agrega el correo correspondiente.
+                const name = from || mailConfig.fromName; // Prioriza "from" sobre "fromName"
+                const email = mailConfig.from || mailConfig.auth.user; // Usa mailConfig.from, si no, usa auth.user
+                finalFrom = `"${name}" <${email}>`; // Formato estándar para nombre y correo
+            }
+            else {
+                // Si "from" y "fromName" están vacíos, usa mailConfig.from o mailConfig.auth.user
+                finalFrom = mailConfig.from || mailConfig.auth.user;
+            }
+            // Construcción del objeto "mailOptions"
             let mailOptions = {
-                from: mailConfig.from, // Dirección desde la cual se envía el correo
+                from: finalFrom, // Dirección desde la cual se envía el correo
                 to: para || "diego@solinges.com.ar", // Lista de destinatarios
                 subject: asunto || "Mail desde NAGES", // Asunto
                 text: texto, // Texto plano del mensaje
-                attachments: []
+                attachments: [] // Archivos adjuntos
             };
             // Agregar el primer adjunto si la ruta no está vacía
             if (filePath1 && filePath1.trim() !== '') {

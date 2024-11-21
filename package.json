@@ -7,7 +7,7 @@
     "dev": "ts-node-dev index.ts",
     "tsc": "tsc",
     "start": "node build/index.js",
-    "test": "jest"
+    "test": "ts-node-dev index.ts --test"
   },
   "repository": {
     "type": "git",

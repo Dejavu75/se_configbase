@@ -10,11 +10,20 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./schemas/sch_config"), exports);
@@ -32,29 +41,9 @@ __exportStar(require("./controllers/con_log"), exports);
 // let mod3: mod2 = new mod2();
 // mod3.iniciarUpdates(mod3.obtenerConexion(true)).then((result) => {console.log(result)});
 //registerService();
-const nodemailer_1 = __importDefault(require("nodemailer"));
-const transporter = nodemailer_1.default.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        user: 'ec.solinges@gmail.com',
-        pass: ''
-    },
-});
-let respuesta = "Correo no enviado";
-let mailOptions = {
-    from: 'ec.solinges@gmail.com', // Dirección desde la cual se envía el correo
-    to: "prueba@gobeyond.com.ar; diego@solinges.com.ar", // Lista de destinatarios
-    subject: "Mail desde NAGES", // Asunto
-    text: "Texto del mail"
-};
-transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        respuesta = error.message;
-    }
-    else {
-        respuesta = 'Correo enviado: ' + info.response;
-    }
-    console.log(respuesta);
-});
+const parametro = process.argv[2];
+if (parametro == "--test") {
+    Promise.resolve().then(() => __importStar(require('./tests/mail.test'))).then((respuesta) => { }).catch((err) => {
+        console.log("Error en test", err);
+    });
+}

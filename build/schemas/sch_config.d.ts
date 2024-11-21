@@ -60,7 +60,7 @@ export type schMailSettings = {
     port: number;
     secure: boolean;
     from: string;
-    fromname: string;
+    fromName: string;
     auth: {
         user: string;
         pass: string;

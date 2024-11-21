@@ -15,5 +15,5 @@ export declare class AgesLog {
     static error(...args: any[]): void;
     static sendLog(para: string, asunto: string, texto: string): Promise<String>;
     static sendMailDebug(asunto: string, texto: string, filePath1: string, filePath2: string): Promise<String>;
-    static sendMail(para: string, asunto: string, texto: string, filePath1: string, filePath2: string): Promise<String>;
+    static sendMail(para: string, asunto: string, texto: string, filePath1?: string, filePath2?: string, from?: string): Promise<String>;
 }

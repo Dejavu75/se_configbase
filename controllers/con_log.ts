@@ -4,10 +4,10 @@ import { Express } from "express";
 import nodemailer from 'nodemailer';
 import { getLocalDirConfig, getMailConfig, getSettingsConfig } from "./conf_default_config"
 
-let oconf=getLocalDirConfig();
+let oconf = getLocalDirConfig();
 var colors = require('colors');
-const outputFile = oconf.logdir+'/'+oconf.logfile;
-const errorFile = oconf.logdir+'/'+oconf.errorfile;
+const outputFile = oconf.logdir + '/' + oconf.logfile;
+const errorFile = oconf.logdir + '/' + oconf.errorfile;
 const outputLog = fs.createWriteStream(outputFile, { flags: 'a' });
 const errorsLog = fs.createWriteStream(errorFile, { flags: 'a' });
 const mailConfig = getMailConfig();
@@ -70,8 +70,8 @@ export function fn_logshow(app: Express) {
 }
 export class AgesLog {
   public static debug(...args: any[]) {
-    consoler.debug(dtString(new Date()),...args);
-    console.debug(dtString(new Date()),...args);
+    consoler.debug(dtString(new Date()), ...args);
+    console.debug(dtString(new Date()), ...args);
   }
   public static infox(texto: string, req: any, ...args: any[]) {
     const fechaHora = dtString(new Date());
@@ -81,7 +81,7 @@ export class AgesLog {
     } else {
       const keySistema = (req.headers['x_ages_key_sistema'] || '').padEnd(10, ' ').slice(0, 10);
       const userID = (req.headers['x_ages_user'] || '').padStart(3, ' ');
-      const equipoID = (req.headers['x_ages_computer'] || '').padStart(3, ' ');    
+      const equipoID = (req.headers['x_ages_computer'] || '').padStart(3, ' ');
       consoler.info(fechaHora, "K: " + keySistema, "U:" + userID, "E:" + equipoID, texto, ...args);
       console.info(fechaHora, "K: " + keySistema, "U:" + userID, "E:" + equipoID, texto, ...args);
     }
@@ -94,14 +94,14 @@ export class AgesLog {
     } else {
       const keySistema = (req.headers['x_ages_key_sistema'] || '').padEnd(10, ' ').slice(0, 10);
       const userID = (req.headers['x_ages_user'] || '').padStart(3, ' ');
-      const equipoID = (req.headers['x_ages_computer'] || '').padStart(3, ' ');    
+      const equipoID = (req.headers['x_ages_computer'] || '').padStart(3, ' ');
       consoler.error(fechaHora, "K: " + keySistema, "U:" + userID, "E:" + equipoID, texto, ...args);
       console.error(fechaHora, "K: " + keySistema, "U:" + userID, "E:" + equipoID, texto, ...args);
     }
   }
   public static info(...args: any[]) {
-    consoler.info(dtString(new Date()),...args);
-    console.info(dtString(new Date()),...args);
+    consoler.info(dtString(new Date()), ...args);
+    console.info(dtString(new Date()), ...args);
   }
   public static logx(texto: string, req: any, ...args: any[]) {
     const fechaHora = dtString(new Date());
@@ -111,32 +111,32 @@ export class AgesLog {
     } else {
       const keySistema = (req.headers['x_ages_key_sistema'] || '').padEnd(10, ' ').slice(0, 10);
       const userID = (req.headers['x_ages_user'] || '').padStart(3, ' ');
-      const equipoID = (req.headers['x_ages_computer'] || '').padStart(3, ' ');    
+      const equipoID = (req.headers['x_ages_computer'] || '').padStart(3, ' ');
       consoler.log(fechaHora, "K: " + keySistema, "U:" + userID, "E:" + equipoID, texto, ...args);
       console.log(fechaHora, "K: " + keySistema, "U:" + userID, "E:" + equipoID, texto, ...args);
     }
   }
   public static log(...args: any[]) {
-    consoler.log(dtString(new Date()),...args);
-    console.log(dtString(new Date()),...args);
+    consoler.log(dtString(new Date()), ...args);
+    console.log(dtString(new Date()), ...args);
   }
 
   public static warn(...args: any[]) {
-    consoler.warn(dtString(new Date()),...args);
-    console.warn(dtString(new Date()),...args);
+    consoler.warn(dtString(new Date()), ...args);
+    console.warn(dtString(new Date()), ...args);
   }
 
   public static error(...args: any[]) {
-    consoler.error(dtString(new Date()),...args);
-    console.error(dtString(new Date()),...args);
+    consoler.error(dtString(new Date()), ...args);
+    console.error(dtString(new Date()), ...args);
   }
-  public static async sendLog(para: string, asunto: string, texto: string){
+  public static async sendLog(para: string, asunto: string, texto: string) {
     return this.sendMail(para, asunto, texto, outputFile, errorFile)
   }
-  public static async sendMailDebug(asunto: string, texto: string, filePath1: string, filePath2: string): Promise <String> {
-      return await this.sendMail(getSettingsConfig().notificaciones_debug, asunto, texto, filePath1, filePath2);
-  }    
-  public static async sendMail(para: string, asunto: string, texto: string, filePath1: string, filePath2: string): Promise <String> {
+  public static async sendMailDebug(asunto: string, texto: string, filePath1: string, filePath2: string): Promise<String> {
+    return await this.sendMail(getSettingsConfig().notificaciones_debug, asunto, texto, filePath1, filePath2);
+  }
+  public static async sendMail(para: string, asunto: string, texto: string, filePath1: string="", filePath2: string="", from: string = ""): Promise<String> {
     let respuesta: string = "Correo no enviado";
     interface MailOptions {
       from: string;
@@ -145,15 +145,33 @@ export class AgesLog {
       text: string;
       attachments?: { filename: string; path: string }[];
     }
-    
+
+    // Lógica para determinar el campo "from"
+    let finalFrom: string;
+
+    // Si "from" contiene un correo, úsalo directamente.
+    if (from && from.includes("@")) {
+      finalFrom = from;
+    } else if (from || mailConfig.fromName) {
+      // Si "from" o "fromName" contienen solo un nombre, agrega el correo correspondiente.
+      const name = from || mailConfig.fromName; // Prioriza "from" sobre "fromName"
+      const email = mailConfig.from || mailConfig.auth.user; // Usa mailConfig.from, si no, usa auth.user
+      finalFrom = `"${name}" <${email}>`; // Formato estándar para nombre y correo
+    } else {
+      // Si "from" y "fromName" están vacíos, usa mailConfig.from o mailConfig.auth.user
+      finalFrom = mailConfig.from || mailConfig.auth.user;
+    }
+
+    // Construcción del objeto "mailOptions"
     let mailOptions: MailOptions = {
-      from: mailConfig.from, // Dirección desde la cual se envía el correo
+      from: finalFrom, // Dirección desde la cual se envía el correo
       to: para || "diego@solinges.com.ar", // Lista de destinatarios
       subject: asunto || "Mail desde NAGES", // Asunto
       text: texto, // Texto plano del mensaje
-      attachments: []
+      attachments: [] // Archivos adjuntos
     };
-    
+
+
     // Agregar el primer adjunto si la ruta no está vacía
     if (filePath1 && filePath1.trim() !== '') {
       mailOptions.attachments!.push({
@@ -161,7 +179,7 @@ export class AgesLog {
         path: filePath1 // Ruta al archivo adjunto 1
       });
     }
-    
+
     // Agregar el segundo adjunto si la ruta no está vacía
     if (filePath2 && filePath2.trim() !== '') {
       mailOptions.attachments!.push({
@@ -169,19 +187,20 @@ export class AgesLog {
         path: filePath2 // Ruta al archivo adjunto 2
       });
     }
-    
+
     // Si no hay adjuntos, se elimina la propiedad attachments
     if (mailOptions.attachments!.length === 0) {
       delete mailOptions.attachments;
     }
-    
+
     try {
       const info = await transporter.sendMail(mailOptions);
-      respuesta='Correo enviado: ' + info.response;
+      respuesta = 'Correo enviado: ' + info.response;
     } catch (error) {
-      respuesta='Error al enviar el correo:'+error;
+      respuesta = 'Error al enviar el correo:' + error;
     }
-  
-  return new Promise((resolve,_reject) => {resolve(respuesta)})};
+
+    return new Promise((resolve, _reject) => { resolve(respuesta) })
+  };
 
 }
