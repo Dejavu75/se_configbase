@@ -4,7 +4,7 @@ declare class DoormanControllerBase {
 export declare class DoormanController extends DoormanControllerBase {
     activeSessions: Map<string, cnt_SessionHolder>;
     private static instance;
-    private constructor();
+    constructor();
     static getInstance(): DoormanController;
     getSession(req: any, res: any, next: any): void;
     checkSession(req: any, res: any, next: any): Promise<any>;

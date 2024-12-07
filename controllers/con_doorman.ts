@@ -5,7 +5,7 @@ class DoormanControllerBase {
 export class DoormanController extends DoormanControllerBase {
     activeSessions: Map<string, cnt_SessionHolder> = new Map();
     private static instance: DoormanController;
-    private constructor() {
+    constructor() {
         super();
         // Private constructor to prevent direct instances
     }
