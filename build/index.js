@@ -33,6 +33,7 @@ __exportStar(require("./modules/mod_dataupdater"), exports);
 __exportStar(require("./controllers/con_dataaccess"), exports);
 __exportStar(require("./controllers/con_log"), exports);
 __exportStar(require("./controllers/con_permissions"), exports);
+__exportStar(require("./controllers/con_doorman"), exports);
 // let oCon = new mod_dataaccess();
 // oCon.controlarMSDATA().then((bResult) => {
 //     console.log("ControlarMSDATA", oCon.database);
