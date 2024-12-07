@@ -1,4 +1,4 @@
-import mysql, { Connection } from "mysql2";
+import mysql, { Connection, RowDataPacket } from "mysql2";
 import { sch_configbase } from "se_contractholder/build/MS08/database";
 import { getMSConfig, getMySQLConfig } from "../controllers/conf_default_config";
 import { mod_dataupdater } from "./mod_dataupdater";
@@ -230,4 +230,92 @@ export class mod_dataaccess {
         });
     }
 
+}
+
+export class mod_dataaccess_generico extends mod_dataaccess {
+    // #region Funciones de inicialización  
+    connection?: Connection | undefined;
+    constructor(mscode = undefined, instancia = undefined, database = undefined) {
+        super(mscode, instancia, database);
+
+    }
+
+    obtenerConexion(multiple?: boolean): Connection {
+        return super.obtenerConexion(multiple);
+    }
+    obtenerConexionado(multiple: boolean): Connection {
+        if (!this.connection) {
+            this.connection = this.obtenerConexion(multiple);
+        }
+        return this.connection;
+    }
+    // #endregion
+// #region Función de manejo de datos genéricos
+async recuperarDatos(tabla: string, condiciones: any = {}): Promise<RowDataPacket[]> {
+    const keys = Object.keys(condiciones);
+    const whereClause = keys.length > 0 ? `WHERE ${keys.map(key => `${key} = ?`).join(' AND ')}` : '';
+    const params = keys.map(key => condiciones[key]);
+    const query = `SELECT * FROM ${tabla} ${whereClause};`;
+
+    const oCon: Connection = this.obtenerConexionado(false);
+    return new Promise((resolve, reject) => {
+        oCon.query(query, params, (error, results) => {
+            if (error) {
+                console.error(`Error al recuperar datos de ${tabla}:`, error);
+                return reject(error);
+            }
+            resolve(results as RowDataPacket[]);
+        });
+    });
+}
+
+// Función para crear datos
+async crearDatos(tabla: string, data: any): Promise<any> {
+    const keys = Object.keys(data);
+    const values = keys.map(() => '?').join(', ');
+    const query = `
+    INSERT INTO ${tabla} (${keys.join(', ')})
+    VALUES (${values});
+`;
+
+    const params = Object.values(data);
+    const oCon: Connection = this.obtenerConexionado(true);
+    return new Promise((resolve, reject) => {
+        oCon.query(query, params, (error, result) => {
+            if (error) {
+                //console.error(`Error al insertar datos en ${tabla}:`, error);
+                return reject(error);
+            }
+            resolve(result);
+        });
+    });
+}
+
+// Función para actualizar datos
+async actualizarDatos(tabla: string, data: any, condiciones: any): Promise<any> {
+    const keys = Object.keys(data);
+    const setClause = keys.map(key => `${key} = ?`).join(', ');
+
+    const conditionKeys = Object.keys(condiciones);
+    const whereClause = conditionKeys.map(key => `${key} = ?`).join(' AND ');
+
+    const query = `
+    UPDATE ${tabla}
+    SET ${setClause}
+    WHERE ${whereClause};
+`;
+
+    const params = [...Object.values(data), ...Object.values(condiciones)];
+    const oCon: Connection = this.obtenerConexionado(true);
+    return new Promise((resolve, reject) => {
+        oCon.query(query, params, (error, result) => {
+            if (error) {
+                //console.error(`Error al actualizar datos en ${tabla}:`, error);
+                return reject(error);
+            }
+            resolve(result);
+        });
+    });
+}
+//#endregion
 }

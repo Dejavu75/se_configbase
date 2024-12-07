@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mod_dataaccess = void 0;
+exports.mod_dataaccess_generico = exports.mod_dataaccess = void 0;
 const mysql2_1 = __importDefault(require("mysql2"));
 const conf_default_config_1 = require("../controllers/conf_default_config");
 const mod_dataupdater_1 = require("./mod_dataupdater");
@@ -261,3 +261,85 @@ class mod_dataaccess {
     }
 }
 exports.mod_dataaccess = mod_dataaccess;
+class mod_dataaccess_generico extends mod_dataaccess {
+    constructor(mscode = undefined, instancia = undefined, database = undefined) {
+        super(mscode, instancia, database);
+    }
+    obtenerConexion(multiple) {
+        return super.obtenerConexion(multiple);
+    }
+    obtenerConexionado(multiple) {
+        if (!this.connection) {
+            this.connection = this.obtenerConexion(multiple);
+        }
+        return this.connection;
+    }
+    // #endregion
+    // #region Función de manejo de datos genéricos
+    recuperarDatos(tabla_1) {
+        return __awaiter(this, arguments, void 0, function* (tabla, condiciones = {}) {
+            const keys = Object.keys(condiciones);
+            const whereClause = keys.length > 0 ? `WHERE ${keys.map(key => `${key} = ?`).join(' AND ')}` : '';
+            const params = keys.map(key => condiciones[key]);
+            const query = `SELECT * FROM ${tabla} ${whereClause};`;
+            const oCon = this.obtenerConexionado(false);
+            return new Promise((resolve, reject) => {
+                oCon.query(query, params, (error, results) => {
+                    if (error) {
+                        console.error(`Error al recuperar datos de ${tabla}:`, error);
+                        return reject(error);
+                    }
+                    resolve(results);
+                });
+            });
+        });
+    }
+    // Función para crear datos
+    crearDatos(tabla, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const keys = Object.keys(data);
+            const values = keys.map(() => '?').join(', ');
+            const query = `
+    INSERT INTO ${tabla} (${keys.join(', ')})
+    VALUES (${values});
+`;
+            const params = Object.values(data);
+            const oCon = this.obtenerConexionado(true);
+            return new Promise((resolve, reject) => {
+                oCon.query(query, params, (error, result) => {
+                    if (error) {
+                        //console.error(`Error al insertar datos en ${tabla}:`, error);
+                        return reject(error);
+                    }
+                    resolve(result);
+                });
+            });
+        });
+    }
+    // Función para actualizar datos
+    actualizarDatos(tabla, data, condiciones) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const keys = Object.keys(data);
+            const setClause = keys.map(key => `${key} = ?`).join(', ');
+            const conditionKeys = Object.keys(condiciones);
+            const whereClause = conditionKeys.map(key => `${key} = ?`).join(' AND ');
+            const query = `
+    UPDATE ${tabla}
+    SET ${setClause}
+    WHERE ${whereClause};
+`;
+            const params = [...Object.values(data), ...Object.values(condiciones)];
+            const oCon = this.obtenerConexionado(true);
+            return new Promise((resolve, reject) => {
+                oCon.query(query, params, (error, result) => {
+                    if (error) {
+                        //console.error(`Error al actualizar datos en ${tabla}:`, error);
+                        return reject(error);
+                    }
+                    resolve(result);
+                });
+            });
+        });
+    }
+}
+exports.mod_dataaccess_generico = mod_dataaccess_generico;
