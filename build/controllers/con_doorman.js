@@ -75,7 +75,24 @@ class DoormanController extends DoormanControllerBase {
     }
     obtenerSesionToken(token) {
         return __awaiter(this, void 0, void 0, function* () {
-            return se_contractholder_1.cnt_SessionHolder.defaultSession();
+            try {
+                let url = new URL("http://localhost:41081/security/credentials/doorman/session/" + token);
+                const response = yield fetch(url.toString(), {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json', // Opcional, según el endpoint
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+                }
+                const sessionData = yield response.json();
+                return se_contractholder_1.cnt_SessionHolder.fromBody(sessionData);
+            }
+            catch (error) {
+                console.error('Error al obtener la sesión desde el endpoint:', error);
+                throw new Error('No se pudo obtener la sesión.');
+            }
         });
     }
 }
