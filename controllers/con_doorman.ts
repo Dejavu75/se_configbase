@@ -71,7 +71,8 @@ export class DoormanController extends DoormanControllerBase {
 
             
             if (!response.ok) {
-                throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+                console.log(`Error HTTP: ${response.status} - ${response.statusText}`);
+                return cnt_SessionHolder.defaultSession();
             }
 
             
@@ -81,7 +82,7 @@ export class DoormanController extends DoormanControllerBase {
             return cnt_SessionHolder.fromBody(sessionData);
         } catch (error) {
             console.error('Error al obtener la sesión desde el endpoint:', error);
-            throw new Error('No se pudo obtener la sesión.');
+           return cnt_SessionHolder.defaultSession();
         }
     }    
 
