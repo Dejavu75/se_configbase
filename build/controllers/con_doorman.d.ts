@@ -11,7 +11,7 @@ export declare class DoormanController extends DoormanControllerBase {
     obtener_token_header(req: any): cnt_SessionHolder;
     req_sessionActive(req: any, res: any): Promise<void>;
     sessionActive(session: cnt_SessionHolder): Promise<cnt_SessionHolder>;
-    obtenerSesionToken(token: string): Promise<cnt_SessionHolder>;
+    protected obtenerSesionToken(token: string): Promise<cnt_SessionHolder>;
 }
 export declare class PermissionsCheck {
     permissions: string[];

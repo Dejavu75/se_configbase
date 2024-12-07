@@ -58,7 +58,7 @@ export class DoormanController extends DoormanControllerBase {
         }
         return session
     }
-    async obtenerSesionToken(token: string) {
+    protected async obtenerSesionToken(token: string) {
         return cnt_SessionHolder.defaultSession()
     }    
 
