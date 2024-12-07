@@ -1,25 +1,27 @@
 import { cnt_SessionHolder } from "se_contractholder";
 
 class DoormanControllerBase {
+    protected static instance: DoormanControllerBase;
+    static getInstance<T extends typeof DoormanControllerBase>(
+        this: T
+    ): InstanceType<T> {
+        if (!this.instance) {
+            this.instance = new this();
+        }
+        return this.instance as InstanceType<T>;
+    }
 }
 export class DoormanController extends DoormanControllerBase {
     activeSessions: Map<string, cnt_SessionHolder> = new Map();
-    private static instance: DoormanController;
-    constructor() {
+    protected constructor() {
         super();
         // Private constructor to prevent direct instances
     }
-    static getInstance(): DoormanController {
-        if (!DoormanController.instance) {
-            DoormanController.instance = new DoormanController();
-        }
-        return DoormanController.instance;
-    }
+
     getSession(req: any, res: any, next: any) {   
         let session = this.obtener_token_header(req);
         this.sessionActive(session).then((session2) => {;
         req.session = session2;
-        
         next();})
     }
     async checkSession(req: any, res: any, next: any) {

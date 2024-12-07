@@ -12,18 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionsCheck = exports.DoormanController = void 0;
 const se_contractholder_1 = require("se_contractholder");
 class DoormanControllerBase {
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new this();
+        }
+        return this.instance;
+    }
 }
 class DoormanController extends DoormanControllerBase {
     constructor() {
         super();
         this.activeSessions = new Map();
         // Private constructor to prevent direct instances
-    }
-    static getInstance() {
-        if (!DoormanController.instance) {
-            DoormanController.instance = new DoormanController();
-        }
-        return DoormanController.instance;
     }
     getSession(req, res, next) {
         let session = this.obtener_token_header(req);

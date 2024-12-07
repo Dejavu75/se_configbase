@@ -1,11 +1,11 @@
 import { cnt_SessionHolder } from "se_contractholder";
 declare class DoormanControllerBase {
+    protected static instance: DoormanControllerBase;
+    static getInstance<T extends typeof DoormanControllerBase>(this: T): InstanceType<T>;
 }
 export declare class DoormanController extends DoormanControllerBase {
     activeSessions: Map<string, cnt_SessionHolder>;
-    private static instance;
-    constructor();
-    static getInstance(): DoormanController;
+    protected constructor();
     getSession(req: any, res: any, next: any): void;
     checkSession(req: any, res: any, next: any): Promise<any>;
     obtener_token_header(req: any): cnt_SessionHolder;
