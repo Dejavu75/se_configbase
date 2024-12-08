@@ -1,4 +1,6 @@
 import { cnt_SessionHolder } from "se_contractholder";
+import { sch_HAEndpoints } from "../schemas/sch_config";
+import { getHAEndpoint } from "./conf_default_config";
 
 class DoormanControllerBase {
     protected static instance: DoormanControllerBase;
@@ -12,6 +14,7 @@ class DoormanControllerBase {
     }
 }
 export class DoormanController extends DoormanControllerBase {
+    haconfig:sch_HAEndpoints= getHAEndpoint();
     activeSessions: Map<string, cnt_SessionHolder> = new Map();
     protected constructor() {
         super();
@@ -59,8 +62,9 @@ export class DoormanController extends DoormanControllerBase {
         return session
     }
     protected async obtenerSesionToken(token: string) {
+
         try {
-            let url = new URL("http://localhost:41081/security/credentials/doorman/session/"+token);
+            let url = new URL(this.haconfig.credentials+"/doorman/session/"+token);
 
             const response = await fetch(url.toString(), {
                 method: 'GET',

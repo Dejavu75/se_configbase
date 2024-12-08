@@ -1,9 +1,11 @@
 import { cnt_SessionHolder } from "se_contractholder";
+import { sch_HAEndpoints } from "../schemas/sch_config";
 declare class DoormanControllerBase {
     protected static instance: DoormanControllerBase;
     static getInstance<T extends typeof DoormanControllerBase>(this: T): InstanceType<T>;
 }
 export declare class DoormanController extends DoormanControllerBase {
+    haconfig: sch_HAEndpoints;
     activeSessions: Map<string, cnt_SessionHolder>;
     protected constructor();
     getSession(req: any, res: any, next: any): void;

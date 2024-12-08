@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionsCheck = exports.DoormanController = void 0;
 const se_contractholder_1 = require("se_contractholder");
+const conf_default_config_1 = require("./conf_default_config");
 class DoormanControllerBase {
     static getInstance() {
         if (!this.instance) {
@@ -22,6 +23,7 @@ class DoormanControllerBase {
 class DoormanController extends DoormanControllerBase {
     constructor() {
         super();
+        this.haconfig = (0, conf_default_config_1.getHAEndpoint)();
         this.activeSessions = new Map();
         // Private constructor to prevent direct instances
     }
@@ -76,7 +78,7 @@ class DoormanController extends DoormanControllerBase {
     obtenerSesionToken(token) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let url = new URL("http://localhost:41081/security/credentials/doorman/session/" + token);
+                let url = new URL(this.haconfig.credentials + "/doorman/session/" + token);
                 const response = yield fetch(url.toString(), {
                     method: 'GET',
                     headers: {
