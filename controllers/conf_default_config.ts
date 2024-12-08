@@ -1,5 +1,5 @@
 import { cnt_heartbeat } from "se_contractholder";
-import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config"
+import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings, sch_MSEndpoints, sch_HAEndpoints } from "../schemas/sch_config"
 
 require('dotenv').config();
 export async function registerService() {
@@ -47,6 +47,7 @@ export function getMSConfig() {
   }
   return msconfig
 }
+
 export function getMySQLConfig() {
   const mysqlconfig: MySQLConfig = {
     host: process.env.MYSQL_HOST || 'localhost',
@@ -118,4 +119,17 @@ export function getMailConfig() {
     }
   }
   return mailconfig   ;
+}
+export function getMSEndpoint() {
+  const schMSE: sch_MSEndpoints = {
+    heartbeatMonitor: process.env.MSHEARTBEATMONITOR || "http://localhost:3007/healthmonitor/heartbeat/register"
+  }
+  return schMSE
+}
+export function getHAEndpoint() {
+  const haEndPoint: sch_HAEndpoints = {
+    foreign: process.env.HAFOREIGN || "http://localhost:41052/foreign",
+    credentials: process.env.HACREDENTIALS || "http://localhost:41081/security/credentials"
+  }
+  return haEndPoint
 }

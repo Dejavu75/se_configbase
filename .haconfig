@@ -1,0 +1,2 @@
+    MSHAENDPOINT=http://localhost:3007/healthmonitor/heartbeat/register
+    MSHEARTBEATMONITOR=http://localhost:3007/healthmonitor/heartbeat/register
