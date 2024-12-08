@@ -323,7 +323,7 @@ async eliminarDatos(tabla: string, data: any, condiciones: any): Promise<any> {
     const whereClause = conditionKeys.map(key => `${key} = ?`).join(' AND ');
 
     const query = `
-    DELETE ${tabla}
+    DELETE FROM ${tabla}
     WHERE ${whereClause};
 `;
 

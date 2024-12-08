@@ -347,7 +347,7 @@ class mod_dataaccess_generico extends mod_dataaccess {
             const conditionKeys = Object.keys(condiciones);
             const whereClause = conditionKeys.map(key => `${key} = ?`).join(' AND ');
             const query = `
-    DELETE ${tabla}
+    DELETE FROM ${tabla}
     WHERE ${whereClause};
 `;
             const params = [...Object.values(data), ...Object.values(condiciones)];
