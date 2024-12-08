@@ -317,5 +317,27 @@ async actualizarDatos(tabla: string, data: any, condiciones: any): Promise<any> 
         });
     });
 }
+async eliminarDatos(tabla: string, data: any, condiciones: any): Promise<any> {
+    const keys = Object.keys(data);
+    const conditionKeys = Object.keys(condiciones);
+    const whereClause = conditionKeys.map(key => `${key} = ?`).join(' AND ');
+
+    const query = `
+    DELETE ${tabla}
+    WHERE ${whereClause};
+`;
+
+    const params = [...Object.values(data), ...Object.values(condiciones)];
+    const oCon: Connection = this.obtenerConexionado(true);
+    return new Promise((resolve, reject) => {
+        oCon.query(query, params, (error, result) => {
+            if (error) {
+                //console.error(`Error al eliminar datos en ${tabla}:`, error);
+                return reject(error);
+            }
+            resolve(result);
+        });
+    });
+}
 //#endregion
 }

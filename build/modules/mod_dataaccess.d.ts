@@ -30,4 +30,5 @@ export declare class mod_dataaccess_generico extends mod_dataaccess {
     recuperarDatos(tabla: string, condiciones?: any): Promise<RowDataPacket[]>;
     crearDatos(tabla: string, data: any): Promise<any>;
     actualizarDatos(tabla: string, data: any, condiciones: any): Promise<any>;
+    eliminarDatos(tabla: string, data: any, condiciones: any): Promise<any>;
 }

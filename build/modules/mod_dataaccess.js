@@ -341,5 +341,27 @@ class mod_dataaccess_generico extends mod_dataaccess {
             });
         });
     }
+    eliminarDatos(tabla, data, condiciones) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const keys = Object.keys(data);
+            const conditionKeys = Object.keys(condiciones);
+            const whereClause = conditionKeys.map(key => `${key} = ?`).join(' AND ');
+            const query = `
+    DELETE ${tabla}
+    WHERE ${whereClause};
+`;
+            const params = [...Object.values(data), ...Object.values(condiciones)];
+            const oCon = this.obtenerConexionado(true);
+            return new Promise((resolve, reject) => {
+                oCon.query(query, params, (error, result) => {
+                    if (error) {
+                        //console.error(`Error al eliminar datos en ${tabla}:`, error);
+                        return reject(error);
+                    }
+                    resolve(result);
+                });
+            });
+        });
+    }
 }
 exports.mod_dataaccess_generico = mod_dataaccess_generico;
