@@ -120,7 +120,7 @@ export function getMailConfig() {
   }
   return mailconfig   ;
 }
-export function getEcoEndpoints() {
+export function getECEndpoints() {
   const schEco: sch_ECEndpoints = {
     habitatEndpoints: getHAEndpoint(),
     internalEndpoints: getMSEndpoint()

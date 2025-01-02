@@ -19,7 +19,7 @@ exports.getLocalDirConfig = getLocalDirConfig;
 exports.getAfipConfig = getAfipConfig;
 exports.getSettingsConfig = getSettingsConfig;
 exports.getMailConfig = getMailConfig;
-exports.getEcoEndpoints = getEcoEndpoints;
+exports.getECEndpoints = getECEndpoints;
 exports.getMSEndpoint = getMSEndpoint;
 exports.getHAEndpoint = getHAEndpoint;
 const se_contractholder_1 = require("se_contractholder");
@@ -146,7 +146,7 @@ function getMailConfig() {
     };
     return mailconfig;
 }
-function getEcoEndpoints() {
+function getECEndpoints() {
     const schEco = {
         habitatEndpoints: getHAEndpoint(),
         internalEndpoints: getMSEndpoint()

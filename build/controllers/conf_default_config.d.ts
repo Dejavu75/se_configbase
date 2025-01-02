@@ -18,6 +18,6 @@ export declare function getAfipConfig(): {
 };
 export declare function getSettingsConfig(): schSettings;
 export declare function getMailConfig(): schMailSettings;
-export declare function getEcoEndpoints(): sch_ECEndpoints;
+export declare function getECEndpoints(): sch_ECEndpoints;
 export declare function getMSEndpoint(): sch_MSEndpoints;
 export declare function getHAEndpoint(): sch_HAEndpoints;
