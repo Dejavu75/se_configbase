@@ -1,4 +1,4 @@
-import { cnt_heartbeat, sch_MSEndpoints, sch_HAEndpoints, sch_ECEndpoints } from "se_contractholder";
+import { cnt_ECEndpoints, cnt_HAEndpoints, cnt_heartbeat, cnt_MSEndpoints } from "se_contractholder";
 import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config";
 export declare function registerService(): Promise<void>;
 export declare function getHeartBeat(): cnt_heartbeat;
@@ -18,6 +18,6 @@ export declare function getAfipConfig(): {
 };
 export declare function getSettingsConfig(): schSettings;
 export declare function getMailConfig(): schMailSettings;
-export declare function getECEndpoints(): sch_ECEndpoints;
-export declare function getMSEndpoint(): sch_MSEndpoints;
-export declare function getHAEndpoint(): sch_HAEndpoints;
+export declare function getECEndpoints(): cnt_ECEndpoints;
+export declare function getMSEndpoint(): cnt_MSEndpoints;
+export declare function getHAEndpoint(): cnt_HAEndpoints;

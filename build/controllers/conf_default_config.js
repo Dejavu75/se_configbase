@@ -147,23 +147,14 @@ function getMailConfig() {
     return mailconfig;
 }
 function getECEndpoints() {
-    const schEco = {
-        habitatEndpoints: getHAEndpoint(),
-        internalEndpoints: getMSEndpoint()
-    };
+    const schEco = new se_contractholder_1.cnt_ECEndpoints(getHAEndpoint(), getMSEndpoint());
     return schEco;
 }
 function getMSEndpoint() {
-    const schMSE = {
-        heartbeatMonitor: process.env.MSHEARTBEATMONITOR || "http://localhost:3007/healthmonitor/heartbeat/register"
-    };
+    const schMSE = new se_contractholder_1.cnt_MSEndpoints(process.env.MSHEARTBEATMONITOR || "http://localhost:3007/healthmonitor/heartbeat/register");
     return schMSE;
 }
 function getHAEndpoint() {
-    const haEndPoint = {
-        foreign: process.env.HAFOREIGN || "http://localhost:41052/foreign",
-        credentials: process.env.HACREDENTIALS || "http://localhost:41081/security/credentials",
-        information: process.env.HAINFORMATION || "http://localhost:41081/security/information",
-    };
+    const haEndPoint = new se_contractholder_1.cnt_HAEndpoints(process.env.HAFOREIGN || "http://localhost:41052/foreign", process.env.HACREDENTIALS || "http://localhost:41081/security/credentials", process.env.HAINFORMATION || "http://localhost:41081/security/information");
     return haEndPoint;
 }

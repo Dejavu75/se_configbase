@@ -1,4 +1,4 @@
-import { cnt_heartbeat, sch_MSEndpoints, sch_HAEndpoints, sch_ECEndpoints } from "se_contractholder";
+import { cnt_ECEndpoints, cnt_HAEndpoints, cnt_heartbeat, cnt_MSEndpoints } from "se_contractholder";
 import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config"
 
 require('dotenv').config();
@@ -121,23 +121,24 @@ export function getMailConfig() {
   return mailconfig   ;
 }
 export function getECEndpoints() {
-  const schEco: sch_ECEndpoints = {
-    habitatEndpoints: getHAEndpoint(),
-    internalEndpoints: getMSEndpoint()
-  }
+  const schEco: cnt_ECEndpoints = new cnt_ECEndpoints(
+    getHAEndpoint(),
+    getMSEndpoint()
+  )
   return schEco
 }
+
 export function getMSEndpoint() {
-  const schMSE: sch_MSEndpoints = {
-    heartbeatMonitor: process.env.MSHEARTBEATMONITOR || "http://localhost:3007/healthmonitor/heartbeat/register"
-  }
+  const schMSE: cnt_MSEndpoints =  new cnt_MSEndpoints(
+     process.env.MSHEARTBEATMONITOR || "http://localhost:3007/healthmonitor/heartbeat/register"
+    )
   return schMSE
 }
-export function getHAEndpoint() {
-  const haEndPoint: sch_HAEndpoints = {
-    foreign: process.env.HAFOREIGN || "http://localhost:41052/foreign",
-    credentials: process.env.HACREDENTIALS || "http://localhost:41081/security/credentials", 
-    information: process.env.HAINFORMATION || "http://localhost:41081/security/information",
-  }
+export function getHAEndpoint():cnt_HAEndpoints {
+  const haEndPoint: cnt_HAEndpoints = new cnt_HAEndpoints(
+     process.env.HAFOREIGN || "http://localhost:41052/foreign",
+     process.env.HACREDENTIALS || "http://localhost:41081/security/credentials", 
+     process.env.HAINFORMATION || "http://localhost:41081/security/information",
+  )
   return haEndPoint
 }
