@@ -1,5 +1,5 @@
-import { cnt_heartbeat } from "se_contractholder";
-import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings, sch_MSEndpoints, sch_HAEndpoints } from "../schemas/sch_config"
+import { cnt_heartbeat, sch_MSEndpoints, sch_HAEndpoints, sch_EcosystemEndpoints } from "se_contractholder";
+import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config"
 
 require('dotenv').config();
 export async function registerService() {
@@ -120,6 +120,13 @@ export function getMailConfig() {
   }
   return mailconfig   ;
 }
+export function getEcoEndpoints() {
+  const schEco: sch_EcosystemEndpoints = {
+    habitatEndpoints: getHAEndpoint(),
+    internalEndpoints: getMSEndpoint()
+  }
+  return schEco
+}
 export function getMSEndpoint() {
   const schMSE: sch_MSEndpoints = {
     heartbeatMonitor: process.env.MSHEARTBEATMONITOR || "http://localhost:3007/healthmonitor/heartbeat/register"
@@ -129,7 +136,8 @@ export function getMSEndpoint() {
 export function getHAEndpoint() {
   const haEndPoint: sch_HAEndpoints = {
     foreign: process.env.HAFOREIGN || "http://localhost:41052/foreign",
-    credentials: process.env.HACREDENTIALS || "http://localhost:41081/security/credentials"
+    credentials: process.env.HACREDENTIALS || "http://localhost:41081/security/credentials", 
+    information: process.env.HAINFORMATION || "http://localhost:41081/security/information",
   }
   return haEndPoint
 }

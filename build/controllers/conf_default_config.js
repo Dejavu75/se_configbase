@@ -19,6 +19,7 @@ exports.getLocalDirConfig = getLocalDirConfig;
 exports.getAfipConfig = getAfipConfig;
 exports.getSettingsConfig = getSettingsConfig;
 exports.getMailConfig = getMailConfig;
+exports.getEcoEndpoints = getEcoEndpoints;
 exports.getMSEndpoint = getMSEndpoint;
 exports.getHAEndpoint = getHAEndpoint;
 const se_contractholder_1 = require("se_contractholder");
@@ -145,6 +146,13 @@ function getMailConfig() {
     };
     return mailconfig;
 }
+function getEcoEndpoints() {
+    const schEco = {
+        habitatEndpoints: getHAEndpoint(),
+        internalEndpoints: getMSEndpoint()
+    };
+    return schEco;
+}
 function getMSEndpoint() {
     const schMSE = {
         heartbeatMonitor: process.env.MSHEARTBEATMONITOR || "http://localhost:3007/healthmonitor/heartbeat/register"
@@ -154,7 +162,8 @@ function getMSEndpoint() {
 function getHAEndpoint() {
     const haEndPoint = {
         foreign: process.env.HAFOREIGN || "http://localhost:41052/foreign",
-        credentials: process.env.HACREDENTIALS || "http://localhost:41081/security/credentials"
+        credentials: process.env.HACREDENTIALS || "http://localhost:41081/security/credentials",
+        information: process.env.HAINFORMATION || "http://localhost:41081/security/information",
     };
     return haEndPoint;
 }

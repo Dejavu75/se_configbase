@@ -1,5 +1,5 @@
-import { cnt_SessionHolder } from "se_contractholder";
-import { sch_HAEndpoints } from "../schemas/sch_config";
+import { cnt_SessionHolder, sch_HAEndpoints } from "se_contractholder";
+
 import { getHAEndpoint } from "./conf_default_config";
 
 class DoormanControllerBase {

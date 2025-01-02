@@ -66,10 +66,3 @@ export type schMailSettings = {
         pass: string;
     };
 };
-export type sch_MSEndpoints = {
-    heartbeatMonitor: string;
-};
-export type sch_HAEndpoints = {
-    foreign: string;
-    credentials: string;
-};

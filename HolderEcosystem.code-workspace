@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "se_contractholder",
+			"path": "../se_contractholder"
+		},
+		{
+			"name": "se_configbase",
+			"path": "."
+		}
+	],
+	"settings": {}
+}

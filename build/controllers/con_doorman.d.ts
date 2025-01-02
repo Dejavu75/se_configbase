@@ -1,5 +1,4 @@
-import { cnt_SessionHolder } from "se_contractholder";
-import { sch_HAEndpoints } from "../schemas/sch_config";
+import { cnt_SessionHolder, sch_HAEndpoints } from "se_contractholder";
 declare class DoormanControllerBase {
     protected static instance: DoormanControllerBase;
     static getInstance<T extends typeof DoormanControllerBase>(this: T): InstanceType<T>;
