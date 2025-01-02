@@ -1,4 +1,4 @@
-import { cnt_heartbeat, sch_MSEndpoints, sch_HAEndpoints, sch_EcosystemEndpoints } from "se_contractholder";
+import { cnt_heartbeat, sch_MSEndpoints, sch_HAEndpoints, sch_ECEndpoints } from "se_contractholder";
 import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config"
 
 require('dotenv').config();
@@ -121,7 +121,7 @@ export function getMailConfig() {
   return mailconfig   ;
 }
 export function getEcoEndpoints() {
-  const schEco: sch_EcosystemEndpoints = {
+  const schEco: sch_ECEndpoints = {
     habitatEndpoints: getHAEndpoint(),
     internalEndpoints: getMSEndpoint()
   }
