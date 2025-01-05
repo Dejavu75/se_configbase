@@ -36,6 +36,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./definitions/def_permissions_definitions"), exports);
 __exportStar(require("./schemas/sch_config"), exports);
 __exportStar(require("./controllers/conf_default_config"), exports);
 __exportStar(require("./modules/mod_dataaccess"), exports);

@@ -1,6 +1,7 @@
 import { registerService } from './controllers/conf_default_config';
 import { mod_dataaccess } from './modules/mod_dataaccess';
 
+export * from './definitions/def_permissions_definitions';
 export * from './schemas/sch_config';
 export * from './controllers/conf_default_config';
 
