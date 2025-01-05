@@ -1,3 +1,4 @@
+import cors from 'cors';
 import { cnt_ECEndpoints, cnt_HAEndpoints, cnt_heartbeat, cnt_MSEndpoints } from "se_contractholder";
 import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config"
 
@@ -141,4 +142,12 @@ export function getHAEndpoint():cnt_HAEndpoints {
      process.env.HAINFORMATION || "http://localhost:41081/security/information",
   )
   return haEndPoint
+}
+export function getFullCors(){
+  return cors({
+    origin: '*', // Permite todos los orígenes
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Permite todos los métodos HTTP
+    allowedHeaders: '*', // Permite todos los headers
+    exposedHeaders: '*', // Permite exponer todos los headers
+  })
 }
