@@ -8,6 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerService = registerService;
 exports.getHeartBeat = getHeartBeat;
@@ -22,6 +25,8 @@ exports.getMailConfig = getMailConfig;
 exports.getECEndpoints = getECEndpoints;
 exports.getMSEndpoint = getMSEndpoint;
 exports.getHAEndpoint = getHAEndpoint;
+exports.getFullCors = getFullCors;
+const cors_1 = __importDefault(require("cors"));
 const se_contractholder_1 = require("se_contractholder");
 require('dotenv').config();
 function registerService() {
@@ -157,4 +162,12 @@ function getMSEndpoint() {
 function getHAEndpoint() {
     const haEndPoint = new se_contractholder_1.cnt_HAEndpoints(process.env.HAFOREIGN || "http://localhost:41052/foreign", process.env.HACREDENTIALS || "http://localhost:41081/security/credentials", process.env.HAINFORMATION || "http://localhost:41081/security/information");
     return haEndPoint;
+}
+function getFullCors() {
+    return (0, cors_1.default)({
+        origin: '*', // Permite todos los orígenes
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Permite todos los métodos HTTP
+        allowedHeaders: '*', // Permite todos los headers
+        exposedHeaders: '*', // Permite exponer todos los headers
+    });
 }
