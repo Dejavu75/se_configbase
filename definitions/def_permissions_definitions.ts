@@ -1,6 +1,6 @@
 import { PermissionsSet } from "../controllers/con_permissions"
 
-export class CH09_AEM extends PermissionsSet {
+export class CH09_AEM_Permissions extends PermissionsSet {
     constructor() {
       super()
       this.loadPermissions()

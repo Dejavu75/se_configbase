@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CH09_AEM = void 0;
+exports.CH09_AEM_Permissions = void 0;
 const con_permissions_1 = require("../controllers/con_permissions");
-class CH09_AEM extends con_permissions_1.PermissionsSet {
+class CH09_AEM_Permissions extends con_permissions_1.PermissionsSet {
     constructor() {
         super();
         this.loadPermissions();
@@ -13,4 +13,4 @@ class CH09_AEM extends con_permissions_1.PermissionsSet {
         this.createPermission('productsUpdate', 'Update', 'Update products', 'foreign');
     }
 }
-exports.CH09_AEM = CH09_AEM;
+exports.CH09_AEM_Permissions = CH09_AEM_Permissions;
