@@ -26,10 +26,10 @@ export class CH09_AEM_Permissions extends PermissionsSet {
     this.createlocalPermission(CH09_EnumP.productsDelete, 'Delete', 'Delete products', 'foreign')
     this.createlocalPermission(CH09_EnumP.productsUpdate, 'Update', 'Update products', 'foreign')
 
-    this.createlocalPermission(CH09_EnumP.palletsInfo, 'Info', 'Get info about a bult', 'foreign')
-    this.createlocalPermission(CH09_EnumP.productsCreate, 'Create', 'Create a new bult', 'foreign')
-    this.createlocalPermission(CH09_EnumP.productsDelete, 'Delete', 'Delete bult', 'foreign')
-    this.createlocalPermission(CH09_EnumP.productsUpdate, 'Update', 'Update bult', 'foreign')
+    this.createlocalPermission(CH09_EnumP.palletsInfo, 'Info', 'Get info about a pallet', 'foreign')
+    this.createlocalPermission(CH09_EnumP.palletsCreate, 'Create', 'Create a new pallet', 'foreign')
+    this.createlocalPermission(CH09_EnumP.palletsDelete, 'Delete', 'Delete pallet', 'foreign')
+    this.createlocalPermission(CH09_EnumP.palletsUpdate, 'Update', 'Update pallet', 'foreign')
 
   }
 }
