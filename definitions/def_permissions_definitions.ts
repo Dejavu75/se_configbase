@@ -1,4 +1,4 @@
-import { cnt_Permission, PermissionType } from "se_contractholder"
+import { cnt_Permission, cnt_SessionHolder, PermissionType } from "se_contractholder"
 import { PermissionsSet } from "../controllers/con_permissions"
 export enum CH09_EnumP {
   productsCreate = 'productsCreate',
@@ -18,7 +18,9 @@ export class CH09_AEM_Permissions extends PermissionsSet {
   createlocalPermission(domainId: CH09_EnumP, name: string, description?: string, domain?: string): cnt_Permission {
     return this.createPermission(domainId.toString(), name, description, domain)
   }
-
+  checklocalPermission(domainId: CH09_EnumP, session: cnt_SessionHolder): boolean {
+    return this.checkPermission(domainId.toString(), session);
+  }
   loadPermissions() {
     this.createlocalPermission(CH09_EnumP.productsCreate, 'Create', 'Create a new product', 'foreign')
     this.createlocalPermission(CH09_EnumP.productsDelete, 'Delete', 'Delete products', 'foreign')
