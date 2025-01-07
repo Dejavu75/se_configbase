@@ -7,6 +7,9 @@
 		{
 			"name": "se_configbase",
 			"path": "."
+		},
+		{
+			"path": "../sh_contracthabitat"
 		}
 	],
 	"settings": {}
