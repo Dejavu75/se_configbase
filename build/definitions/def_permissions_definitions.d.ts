@@ -7,7 +7,8 @@ export declare enum CH09_EnumP {
     palletsInfo = "palletsInfo",
     palletsCreate = "palletsCreate",
     palletsDelete = "palletsDelete",
-    palletsUpdate = "palletsUpdate"
+    palletsUpdate = "palletsUpdate",
+    warehousesInfo = "warehousesInfo"
 }
 export declare class CH09_AEM_Permissions extends PermissionsSet {
     constructor();

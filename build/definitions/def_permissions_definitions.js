@@ -11,6 +11,7 @@ var CH09_EnumP;
     CH09_EnumP["palletsCreate"] = "palletsCreate";
     CH09_EnumP["palletsDelete"] = "palletsDelete";
     CH09_EnumP["palletsUpdate"] = "palletsUpdate";
+    CH09_EnumP["warehousesInfo"] = "warehousesInfo";
 })(CH09_EnumP || (exports.CH09_EnumP = CH09_EnumP = {}));
 class CH09_AEM_Permissions extends con_permissions_1.PermissionsSet {
     constructor() {
@@ -31,6 +32,7 @@ class CH09_AEM_Permissions extends con_permissions_1.PermissionsSet {
         this.createlocalPermission(CH09_EnumP.palletsCreate, 'Create', 'Create a new pallet', 'foreign');
         this.createlocalPermission(CH09_EnumP.palletsDelete, 'Delete', 'Delete pallet', 'foreign');
         this.createlocalPermission(CH09_EnumP.palletsUpdate, 'Update', 'Update pallet', 'foreign');
+        this.createlocalPermission(CH09_EnumP.warehousesInfo, 'Info', 'Get info about a warehouse', 'foreign');
     }
 }
 exports.CH09_AEM_Permissions = CH09_AEM_Permissions;
