@@ -140,7 +140,7 @@ export function getHAEndpoint():cnt_HAEndpoints {
      process.env.HAFOREIGN || "http://localhost:41052/foreign",
      process.env.HACREDENTIALS || "http://localhost:41081/security/credentials", 
      process.env.HAINFORMATION || "http://localhost:41081/security/information",
-     process.env.HAAGES || "http://localhost/ages",
+     process.env.HAAGES || "http://localhost/ages"
   )
   return haEndPoint
 }
