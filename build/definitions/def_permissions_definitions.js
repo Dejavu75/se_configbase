@@ -11,6 +11,7 @@ var CH09_EnumP;
     CH09_EnumP["palletsCreate"] = "palletsCreate";
     CH09_EnumP["palletsDelete"] = "palletsDelete";
     CH09_EnumP["palletsUpdate"] = "palletsUpdate";
+    CH09_EnumP["palletsTransfer"] = "palletsTransfer";
     CH09_EnumP["warehousesInfo"] = "warehousesInfo";
 })(CH09_EnumP || (exports.CH09_EnumP = CH09_EnumP = {}));
 class CH09_AEM_Permissions extends con_permissions_1.PermissionsSet {
