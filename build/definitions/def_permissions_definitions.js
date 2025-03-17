@@ -33,6 +33,7 @@ class CH09_AEM_Permissions extends con_permissions_1.PermissionsSet {
         this.createlocalPermission(CH09_EnumP.palletsCreate, 'Create', 'Create a new pallet', 'foreign');
         this.createlocalPermission(CH09_EnumP.palletsDelete, 'Delete', 'Delete pallet', 'foreign');
         this.createlocalPermission(CH09_EnumP.palletsUpdate, 'Update', 'Update pallet', 'foreign');
+        this.createlocalPermission(CH09_EnumP.palletsTransfer, 'Transfer', 'Transfer pallet', 'foreign');
         this.createlocalPermission(CH09_EnumP.warehousesInfo, 'Info', 'Get info about a warehouse', 'foreign');
     }
 }
