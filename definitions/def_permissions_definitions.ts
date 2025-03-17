@@ -8,6 +8,7 @@ export enum CH09_EnumP {
   palletsCreate = 'palletsCreate',
   palletsDelete = 'palletsDelete',
   palletsUpdate = 'palletsUpdate',
+  palletsTransfer = 'palletsTransfer',
   warehousesInfo = 'warehousesInfo',
 }
 export class CH09_AEM_Permissions extends PermissionsSet {
