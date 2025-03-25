@@ -4,6 +4,7 @@ export declare enum CH09_EnumP {
     productsCreate = "productsCreate",
     productsDelete = "productsDelete",
     productsUpdate = "productsUpdate",
+    productsInfo = "productsInfo",
     palletsInfo = "palletsInfo",
     palletsCreate = "palletsCreate",
     palletsDelete = "palletsDelete",

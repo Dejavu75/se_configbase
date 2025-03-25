@@ -7,6 +7,7 @@ var CH09_EnumP;
     CH09_EnumP["productsCreate"] = "productsCreate";
     CH09_EnumP["productsDelete"] = "productsDelete";
     CH09_EnumP["productsUpdate"] = "productsUpdate";
+    CH09_EnumP["productsInfo"] = "productsInfo";
     CH09_EnumP["palletsInfo"] = "palletsInfo";
     CH09_EnumP["palletsCreate"] = "palletsCreate";
     CH09_EnumP["palletsDelete"] = "palletsDelete";
@@ -29,6 +30,7 @@ class CH09_AEM_Permissions extends con_permissions_1.PermissionsSet {
         this.createlocalPermission(CH09_EnumP.productsCreate, 'Create', 'Create a new product', 'foreign');
         this.createlocalPermission(CH09_EnumP.productsDelete, 'Delete', 'Delete products', 'foreign');
         this.createlocalPermission(CH09_EnumP.productsUpdate, 'Update', 'Update products', 'foreign');
+        this.createlocalPermission(CH09_EnumP.productsInfo, 'Info', 'Get info about a product', 'foreign');
         this.createlocalPermission(CH09_EnumP.palletsInfo, 'Info', 'Get info about a pallet', 'foreign');
         this.createlocalPermission(CH09_EnumP.palletsCreate, 'Create', 'Create a new pallet', 'foreign');
         this.createlocalPermission(CH09_EnumP.palletsDelete, 'Delete', 'Delete pallet', 'foreign');

@@ -4,6 +4,7 @@ export enum CH09_EnumP {
   productsCreate = 'productsCreate',
   productsDelete = 'productsDelete',
   productsUpdate = 'productsUpdate',
+  productsInfo = 'productsInfo',
   palletsInfo = 'palletsInfo',
   palletsCreate = 'palletsCreate',
   palletsDelete = 'palletsDelete',
@@ -27,6 +28,7 @@ export class CH09_AEM_Permissions extends PermissionsSet {
     this.createlocalPermission(CH09_EnumP.productsCreate, 'Create', 'Create a new product', 'foreign')
     this.createlocalPermission(CH09_EnumP.productsDelete, 'Delete', 'Delete products', 'foreign')
     this.createlocalPermission(CH09_EnumP.productsUpdate, 'Update', 'Update products', 'foreign')
+    this.createlocalPermission(CH09_EnumP.productsInfo, 'Info', 'Get info about a product', 'foreign')
 
     this.createlocalPermission(CH09_EnumP.palletsInfo, 'Info', 'Get info about a pallet', 'foreign')
     this.createlocalPermission(CH09_EnumP.palletsCreate, 'Create', 'Create a new pallet', 'foreign')
