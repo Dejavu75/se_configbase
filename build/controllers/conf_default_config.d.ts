@@ -1,6 +1,6 @@
 import cors from 'cors';
 import { cnt_ECEndpoints, cnt_HAEndpoints, cnt_heartbeat, cnt_MSEndpoints } from "se_contractholder";
-import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config";
+import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings, schModelBases } from "../schemas/sch_config";
 export declare function registerService(): Promise<void>;
 export declare function getHeartBeat(): cnt_heartbeat;
 export declare function getMSIdentity(): sch_msidentity;
@@ -27,3 +27,4 @@ export declare function getFullCors(): (req: cors.CorsRequest, res: {
     setHeader(key: string, value: string): any;
     end(): any;
 }, next: (err?: any) => any) => void;
+export declare function getModelBases(): schModelBases;

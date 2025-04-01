@@ -26,6 +26,7 @@ exports.getECEndpoints = getECEndpoints;
 exports.getMSEndpoint = getMSEndpoint;
 exports.getHAEndpoint = getHAEndpoint;
 exports.getFullCors = getFullCors;
+exports.getModelBases = getModelBases;
 const cors_1 = __importDefault(require("cors"));
 const se_contractholder_1 = require("se_contractholder");
 require('dotenv').config();
@@ -170,4 +171,14 @@ function getFullCors() {
         allowedHeaders: '*', // Permite todos los headers
         exposedHeaders: '*', // Permite exponer todos los headers
     });
+}
+function isValidModelBase(value) {
+    return Object.values(se_contractholder_1.modelBase).includes(value);
+}
+function getModelBases() {
+    return {
+        pallets: isValidModelBase(process.env.MODELBASES_PALLETS) ? process.env.MODELBASES_PALLETS : se_contractholder_1.modelBase.auto,
+        products: isValidModelBase(process.env.MODELBASES_PRODUCTS) ? process.env.MODELBASES_PRODUCTS : se_contractholder_1.modelBase.auto,
+        warehouses: isValidModelBase(process.env.MODELBASES_WAREHOUSES) ? process.env.MODELBASES_WAREHOUSES : se_contractholder_1.modelBase.auto,
+    };
 }

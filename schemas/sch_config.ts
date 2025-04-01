@@ -1,3 +1,4 @@
+import { modelBase } from "se_contractholder"
 
 export type MySQLConfig = {
     host: string
@@ -71,3 +72,8 @@ export type schMailSettings = {
   }
 }
 
+export type schModelBases = {
+  pallets: modelBase ,
+  products: modelBase,
+  warehouses: modelBase,
+}

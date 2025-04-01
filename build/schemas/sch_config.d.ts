@@ -1,3 +1,4 @@
+import { modelBase } from "se_contractholder";
 export type MySQLConfig = {
     host: string;
     user: string;
@@ -65,4 +66,9 @@ export type schMailSettings = {
         user: string;
         pass: string;
     };
+};
+export type schModelBases = {
+    pallets: modelBase;
+    products: modelBase;
+    warehouses: modelBase;
 };

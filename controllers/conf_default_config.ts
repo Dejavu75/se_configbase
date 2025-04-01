@@ -1,6 +1,6 @@
 import cors from 'cors';
-import { cnt_ECEndpoints, cnt_HAEndpoints, cnt_heartbeat, cnt_MSEndpoints } from "se_contractholder";
-import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings } from "../schemas/sch_config"
+import { cnt_ECEndpoints, cnt_HAEndpoints, cnt_heartbeat, cnt_MSEndpoints, modelBase } from "se_contractholder";
+import { MySQLConfig, servingConfig, localdirConfig, schSettings, sch_msconfig, sch_msidentity, schMailSettings, schModelBases } from "../schemas/sch_config"
 
 require('dotenv').config();
 export async function registerService() {
@@ -151,4 +151,17 @@ export function getFullCors(){
     allowedHeaders: '*', // Permite todos los headers
     exposedHeaders: '*', // Permite exponer todos los headers
   })
+}
+
+function isValidModelBase(value: string | undefined): value is modelBase {
+  return Object.values(modelBase).includes(value as modelBase);
+}
+
+export function getModelBases(): schModelBases {
+  return {
+    pallets: isValidModelBase(process.env.MODELBASES_PALLETS) ? process.env.MODELBASES_PALLETS as modelBase : modelBase.auto,
+    products: isValidModelBase(process.env.MODELBASES_PRODUCTS) ? process.env.MODELBASES_PRODUCTS as modelBase : modelBase.auto,
+    warehouses: isValidModelBase(process.env.MODELBASES_WAREHOUSES) ? process.env.MODELBASES_WAREHOUSES as modelBase : modelBase.auto,
+  };
+
 }
