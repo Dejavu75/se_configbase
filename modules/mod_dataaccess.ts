@@ -166,7 +166,7 @@ export class mod_dataaccess {
             let sql = `INSERT INTO configbase.config (mscode, instancia, msdb) VALUES ('${this.mscode}', '${this.instancia}', '${this.database}')`;
             return new Promise((resolve, reject) => {
                 //console.log("ConfigBase Promise");
-                oCon.query(sql, async (err: any, result: sch_configbase[]) => {
+                oCon.query(sql, async (err: any, result: any) => {
                     //console.log("ConfigBase Query");
                     oCon.end();
                     if (err) reject(null);
@@ -187,7 +187,7 @@ export class mod_dataaccess {
             let sql = `SELECT * FROM configbase.config WHERE mscode='${this.mscode}' AND instancia='${this.instancia}'`;
             return new Promise((resolve, reject) => {
                 //console.log("controlarConfigBase Promise");
-                oCon.query(sql, async (err: any, result: sch_configbase[]) => {
+                oCon.query(sql, async (err: any, result: any) => {
                     //console.log("controlarConfigBase Query");
                     oCon.end();
                     if (err) {
