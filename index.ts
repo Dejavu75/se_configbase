@@ -10,6 +10,7 @@ export * from './controllers/con_dataaccess';
 export * from './controllers/con_log';
 export * from './controllers/con_permissions';
 export * from './controllers/con_doorman';
+export * from './controllers/con_interms_auth';
 
 // let oCon = new mod_dataaccess();
 // oCon.controlarMSDATA().then((bResult) => {
