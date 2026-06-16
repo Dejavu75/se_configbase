@@ -94,6 +94,8 @@ function getInterMsAuthorizationHeaders(options = {}) {
     const identity = (0, conf_default_config_1.getMSIdentity)();
     return {
         Authorization: `Bearer ${token}`,
+        "X-Inter-MS-Token": token,
+        "X-EC-Service-Token": token,
         "X-EC-MS-Code": identity.mscode,
         "X-EC-MS-Instance": identity.msinstance,
         "X-EC-MS-Service-Type": identity.serviceType

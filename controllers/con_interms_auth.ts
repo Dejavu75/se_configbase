@@ -110,6 +110,8 @@ export function getInterMsAuthorizationHeaders(options: InterMsTokenOptions = {}
   const identity = getMSIdentity();
   return {
     Authorization: `Bearer ${token}`,
+    "X-Inter-MS-Token": token,
+    "X-EC-Service-Token": token,
     "X-EC-MS-Code": identity.mscode,
     "X-EC-MS-Instance": identity.msinstance,
     "X-EC-MS-Service-Type": identity.serviceType
