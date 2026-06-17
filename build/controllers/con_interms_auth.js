@@ -96,6 +96,7 @@ function getInterMsAuthorizationHeaders(options = {}) {
         Authorization: `Bearer ${token}`,
         "X-Inter-MS-Token": token,
         "X-EC-Service-Token": token,
+        "X-AGES-API-Key": `interms:${token}`,
         "X-EC-MS-Code": identity.mscode,
         "X-EC-MS-Instance": identity.msinstance,
         "X-EC-MS-Service-Type": identity.serviceType
