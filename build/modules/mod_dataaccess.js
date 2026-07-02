@@ -251,7 +251,12 @@ class mod_dataaccess {
                 oCon.connect((err) => {
                     if (err) {
                         console.error("conexionBase Error al conectar: ", err.message);
-                        console.error("Config: ", oCon.config);
+                        console.error("ConfigBase destino:", {
+                            host: oCon.config.host,
+                            port: oCon.config.port,
+                            database: oCon.config.database,
+                            user: oCon.config.user
+                        });
                         return reject(err);
                     }
                     //console.log("conexionBase Conectada a la base de datos " + oCon.config.host);

@@ -223,7 +223,12 @@ export class mod_dataaccess {
                 if (err) {
                     
                     console.error("conexionBase Error al conectar: ", err.message);
-                    console.error("Config: ", oCon.config);
+                    console.error("ConfigBase destino:", {
+                        host: oCon.config.host,
+                        port: oCon.config.port,
+                        database: oCon.config.database,
+                        user: oCon.config.user
+                    });
 
                     return reject(err);
                 }
