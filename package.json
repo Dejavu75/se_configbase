@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "dev": "ts-node-dev index.ts",
-    "tsc": "tsc",
+    "tsc": "node node_modules/typescript/bin/tsc",
     "start": "node build/index.js",
     "test": "ts-node-dev index.ts --test"
   },
@@ -27,6 +27,7 @@
     "@types/node": "^22.7.3",
     "@types/nodemailer": "^6.4.16",
     "ts-jest": "^29.2.5",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2"
   },
   "dependencies": {
@@ -36,7 +37,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "mysql2": "^3.11.3",
-    "nodemailer": "^9.0.1",
-    "se_contractholder": "github:Dejavu75/se_contractholder"
+    "nodemailer": "^10.1.4",
+    "se_contractholder": "git+https://github.com/Dejavu75/se_contractholder.git#8f5857b070a60efea1590783e64f2b6798d674d1"
   }
 }
