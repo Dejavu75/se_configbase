@@ -3,6 +3,23 @@ import { sch_configbase } from "se_contractholder/build/MS08/database";
 import { getMSConfig, getMySQLConfig } from "../controllers/conf_default_config";
 import { mod_dataupdater } from "./mod_dataupdater";
 
+const unavailableConnections = new WeakSet<Connection>();
+
+export function isConnectionUsable(connection?: Connection): connection is Connection {
+    return Boolean(connection) && !unavailableConnections.has(connection!);
+}
+
+function trackConnection(connection: Connection): Connection {
+    connection.on('error', () => {
+        if (!unavailableConnections.has(connection)) {
+            unavailableConnections.add(connection);
+            console.error('Conexión MySQL no disponible');
+        }
+    });
+    connection.on('end', () => unavailableConnections.add(connection));
+    return connection;
+}
+
 
 export class mod_dataaccess {
     Connection?: Connection = undefined;
@@ -29,7 +46,7 @@ export class mod_dataaccess {
             multipleStatements: multiple
         });
         //console.log("Conexión a la base de datos", connection.config);
-        return connection;
+        return trackConnection(connection);
     }
     async controlarMSDATA() {
         //console.log("ControlarMSDATA");
@@ -154,7 +171,7 @@ export class mod_dataaccess {
             multipleStatements: true            
         });
         //console.log("Obtener ConfigBase ", connection.config);
-        return connection;
+        return trackConnection(connection);
     }
 
     // Registra el nuevo MS en la base de configuración
@@ -252,7 +269,7 @@ export class mod_dataaccess_generico extends mod_dataaccess {
         return super.obtenerConexion(multiple);
     }
     obtenerConexionado(multiple: boolean): Connection {
-        if (!this.connection) {
+        if (!isConnectionUsable(this.connection)) {
             this.connection = this.obtenerConexion(multiple);
         }
         return this.connection;

@@ -13,9 +13,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mod_dataaccess_generico = exports.mod_dataaccess = void 0;
+exports.isConnectionUsable = isConnectionUsable;
 const mysql2_1 = __importDefault(require("mysql2"));
 const conf_default_config_1 = require("../controllers/conf_default_config");
 const mod_dataupdater_1 = require("./mod_dataupdater");
+const unavailableConnections = new WeakSet();
+function isConnectionUsable(connection) {
+    return Boolean(connection) && !unavailableConnections.has(connection);
+}
+function trackConnection(connection) {
+    connection.on('error', () => {
+        if (!unavailableConnections.has(connection)) {
+            unavailableConnections.add(connection);
+            console.error('Conexión MySQL no disponible');
+        }
+    });
+    connection.on('end', () => unavailableConnections.add(connection));
+    return connection;
+}
 class mod_dataaccess {
     constructor(mscode = "", instancia = "", database = "") {
         this.Connection = undefined;
@@ -43,7 +58,7 @@ class mod_dataaccess {
             multipleStatements: multiple
         });
         //console.log("Conexión a la base de datos", connection.config);
-        return connection;
+        return trackConnection(connection);
     }
     controlarMSDATA() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -179,7 +194,7 @@ class mod_dataaccess {
             multipleStatements: true
         });
         //console.log("Obtener ConfigBase ", connection.config);
-        return connection;
+        return trackConnection(connection);
     }
     // Registra el nuevo MS en la base de configuración
     inicializarConfigBase() {
@@ -275,7 +290,7 @@ class mod_dataaccess_generico extends mod_dataaccess {
         return super.obtenerConexion(multiple);
     }
     obtenerConexionado(multiple) {
-        if (!this.connection) {
+        if (!isConnectionUsable(this.connection)) {
             this.connection = this.obtenerConexion(multiple);
         }
         return this.connection;

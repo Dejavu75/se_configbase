@@ -1,6 +1,7 @@
 import { Connection, RowDataPacket } from "mysql2";
 import { sch_configbase } from "se_contractholder/build/MS08/database";
 import { mod_dataupdater } from "./mod_dataupdater";
+export declare function isConnectionUsable(connection?: Connection): connection is Connection;
 export declare class mod_dataaccess {
     Connection?: Connection;
     mscode: string;
